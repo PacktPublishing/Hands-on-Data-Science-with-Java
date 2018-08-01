@@ -4,10 +4,17 @@
   <artifactId>Hands-on-Data-Science-with-Java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <dependencies>
+  <!-- Adding a dependency for Table Saw to help with Analytics -->
   	<dependency>
   		<groupId>tech.tablesaw</groupId>
 	    <artifactId>tablesaw-core</artifactId>
 	    <version>LATEST</version>
+  	</dependency>
+  	<!-- Adding a dependency for KUMO to help with word cloud -->
+  	<dependency>
+  		<groupId>com.kennycason</groupId>
+		<artifactId>kumo-core</artifactId>
+		<version>1.13</version>
   	</dependency>
   </dependencies>
   <build>
