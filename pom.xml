@@ -10,12 +10,6 @@
 	    <artifactId>tablesaw-core</artifactId>
 	    <version>LATEST</version>
   	</dependency>
-  	<!-- Adding a dependency for KUMO to help with word cloud -->
-  	<dependency>
-  		<groupId>com.kennycason</groupId>
-		<artifactId>kumo-core</artifactId>
-		<version>1.13</version>
-  	</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
