@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.sql.*;
 
 import tech.tablesaw.api.ColumnType;
 import tech.tablesaw.api.Table;
@@ -24,24 +25,10 @@ public class LoadingData {
 			Table hrAnalytics  = Table.read().csv("../HR_comma_sep2.csv");
 			
 		/**
-		 * When Loading Specific columns from the  scv
+		 * When Loading Specific columns from the  csv
 		 * 
 		 */
-//			ColumnType[] types = {LOCAL_DATE, INTEGER, FLOAT, FLOAT, CATEGORY};
-//			Table t = Table.read().csv(CsvReadOptions
-//			    .builder("myFile.csv")
-//			    .columnTypes(types))
-					
-		
-			//Loading from CSV when you don't want all the columns
-			//https://jtablesaw.wordpress.com/user-guide/tables/
-//			ColumnType[] types = { SKIP, SKIP, INTEGER, INTEGER }; 
-//					//INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, STRING };
-//			Table myHrStuffs = Table.read().csv(CsvReadOptions
-//			    .builder("../HR_comma_sep2.csv")
-//			    .columnTypes(types));
-//			
-		
+	
 		/**
 		 * Getting the structure of the table, this is knowing the data types using Table saw 
 		 */
@@ -53,6 +40,14 @@ public class LoadingData {
 		 * Creating a function to load data from a database
 		 * @param args
 		 */
+			
+			//Table t = Table.read().db(ResultSet resultSet, String tableName);
+			try {
+				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/customers","root","");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	
 
 	/**
