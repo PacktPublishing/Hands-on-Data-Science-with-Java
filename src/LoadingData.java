@@ -42,6 +42,9 @@ public class LoadingData {
 		 */
 			
 			//Table t = Table.read().db(ResultSet resultSet, String tableName);
+			/**
+			 * Creating a database connection, one requires
+			 */
 			try {
 				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/customers","root","");
 			} catch (SQLException e) {
