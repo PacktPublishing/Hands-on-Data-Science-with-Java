@@ -84,6 +84,44 @@ public class LoadingData {
 		//Testing  the output from the API
 		Table streamStructure = HRAnalyticsTable.structure();
 		System.out.println(streamStructure);			
-	}
+	
+	
+	/**
+	 * Now we have loaded the data, Next step is accessing different objects/ sections of the 
+	 * data. This involves interacting with the data itself
+	 * We have three tables so far: HRAnalyticsTable, DBcustomers and hrAnalytics
+	 */
+	
+	//Getting to know the structure of the table fetched, this includes the data types before interacting with the data
+	
+	//Testing  the output from the API
+			System.out.println("Printing the structure of the table  from the API");
+			Table apiStructure = HRAnalyticsTable.structure();
+			System.out.println(apiStructure);
+			
+	
+	/**
+	 * We will be focussing on different ways to handle the missing data
+	 * Removing the  missing data i.e the rows and the columns
+	 * Linear interpolation , Last observation carried forward,  Next observation carried forward
+	 * 
+	 */
+			
+			
+			
+			
+}
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
