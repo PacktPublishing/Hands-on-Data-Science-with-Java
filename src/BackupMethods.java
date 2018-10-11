@@ -1,22 +1,21 @@
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.sql.*;
-import tech.tablesaw.api.ColumnType;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import tech.tablesaw.api.DoubleColumn;
-import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-import tech.tablesaw.io.csv.CsvReadOptions;
-import java.io.*;
-;/**
- * Video 2.1 : Loading data from different sources
- * @author rwangari
- *
- */
-public class LoadingData {
 
-	public LoadingData() {
+public class BackupMethods {
+
+	public BackupMethods() {
 		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public static void main(String[] args)throws IOException {
@@ -163,25 +162,7 @@ public class LoadingData {
 	//Removing Columns with Missing data
 			
 			//hrAnalytics.removeColumnsWithMissingValues();
+	}
 
-				
-
-			
-	
-			
-			
 }
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
