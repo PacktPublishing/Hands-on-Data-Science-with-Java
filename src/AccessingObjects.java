@@ -64,6 +64,9 @@ public class AccessingObjects {
 	//print the column names to see whether the column has been removed
 	System.out.println(hrAnalytics.columnNames());
 	
+	//Specifying the columns that you want left with is also easier incase the columns to be removed are many
+	//hrAnalytics.retainColumns("Me","you");
+	
 	
 	
 /**

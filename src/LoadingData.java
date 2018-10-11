@@ -88,70 +88,7 @@ public class LoadingData {
 		Table streamStructure = HRAnalyticsTable.structure();
 		System.out.println(streamStructure);			
 	
-	
-	/**
-	 * Now we have loaded the data, Next step is accessing different objects/ sections of the 
-	 * data. This involves interacting with the data itself
-	 * We have three tables so far: HRAnalyticsTable, DBcustomers and hrAnalytics
-	 */
-	
-	//Getting to know the structure of the table fetched, this includes the data types before interacting with the data
-	
-	//Testing  the output from the local csv machine
-			System.out.println("Printing the structure of the table  loaded from my local machine");
-			Table localStructure = hrAnalytics.structure();
-			System.out.println(localStructure);
-			
-	//Knowing the size of the table that loaded. Knowing the columns and the rows
-			System.out.println("Getting the total number of columns and rows");
-			String tableShape = hrAnalytics.shape();
-			System.out.println(tableShape);
-	
-	//Exploring the tables and first rows
-			System.out.println("Printing the first rows of the table");
-			Table tableHead = hrAnalytics.first(5);
-			System.out.println(tableHead);
-			
-//Exploring the tables and the last rows
-			System.out.println("Printing the last  rows of the table");
-			Table tableTail = hrAnalytics.last(5);
-			System.out.println(tableTail);
-			
-//Working with Table columns, column names
-			System.out.println(hrAnalytics.columnNames());
-			
-//Adding new columns to the  table you have loaded.
-			
-			double [] theIndexing = {0, 1, 2, 3, 4, 5, 6};
-			DoubleColumn myIndexColumn = DoubleColumn.create("theIndexes",theIndexing);
-			hrAnalytics.insertColumn(0,myIndexColumn);
-			
-			//print the column names to see whether the column has been added.
-			System.out.println(hrAnalytics.columnNames());
 		
-//removing some columns  from the table
-			hrAnalytics.removeColumns("theIndexes");
-			//print the column names to see whether the column has been removed
-			System.out.println(hrAnalytics.columnNames());
-			
-			//Specifying the columns that you want left with is also easier incase the columns to be removed are many
-			//hrAnalytics.retainColumns("Me","you");
-			
-//Creating a new table as a subset of the old one
-			Table latestHrAnalytics = hrAnalytics.select("Name", "Satisfaction level", "Last Evaluation", "Left", "Promotion");
-			System.out.println(latestHrAnalytics.columnNames());
-			
-//Retrieving a single column from the table
-			StringColumn theSatisfaction = (StringColumn) hrAnalytics.column("Satisfaction level");
-			
-//Combining tables:
-			//Combining  rows
-			Table mergedTables1 = hrAnalytics.append(latestHrAnalytics);
-			
-			//Combining columns
-			Table mergedTables2 = latestHrAnalytics.concat(hrAnalytics);
-
-			
 
 	/**
 	 * We will be focussing on different ways to handle the missing data
