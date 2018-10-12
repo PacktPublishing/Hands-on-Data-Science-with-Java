@@ -1,12 +1,7 @@
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import tech.tablesaw.api.ColumnType;
-import tech.tablesaw.api.DoubleColumn;
-import tech.tablesaw.api.NumberColumn;
-import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-import tech.tablesaw.io.csv.CsvReadOptions;
 import java.io.*;
 ;/**
  * Video 2.1 : Loading data from different sources
