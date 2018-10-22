@@ -1,10 +1,14 @@
 import java.io.IOException;
+import java.time.LocalDate;
 
+import tech.tablesaw.api.ColumnType;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.NumberColumn;
+import tech.tablesaw.api.Row;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.filtering.Filter;
+import tech.tablesaw.io.csv.CsvReadOptions;
 import tech.tablesaw.selection.Selection;
 
 public class AccessingObjects {
@@ -78,6 +82,9 @@ public class AccessingObjects {
 	//Specifying the columns that you want left with is also easier incase the columns to be removed are many
 	//hrAnalytics.retainColumns("Me","you");
 	
+	//Sorting the table with specific Columns( ascending or descending manner)
+	Table ascendingHr = hrAnalytics.sortAscendingOn("Satisfaction level");
+	ascendingHr.first(8);
 	
 	
 /**
@@ -86,7 +93,7 @@ public class AccessingObjects {
 	
 	//Accessing the first 5 rows of the table
 	System.out.println("Printing the first rows of the table");
-	Table tableHead = hrAnalytics.first(5);
+	Table tableHead = hrAnalytics.first(15);
 	System.out.println(tableHead);
 	
 	//Accessing the last 5 rows of the table
@@ -125,7 +132,7 @@ public class AccessingObjects {
 		Table tableHead2 = EmployeesWithLE.first(5);
 		System.out.println(tableHead2);
 	
-		//Talk about : Selections, filters, most used filters, where
+		//Talk about : Selections, filters, most used filters, where, drop where and give a link to the filter API 
 		
 
 /**
@@ -135,13 +142,72 @@ public class AccessingObjects {
 	//Removing Columns with Missing data
 			//hrAnalytics.removeColumnsWithMissingValues();
 
-		
-	
-/**
- * Section 2.6 : Formatting various data types
- */
-		
-	// Typecasting
+	//Removing Rows with Missing data based on specific columns. Using a for loop
+			
+			
+			DoubleColumn mycolumn =null ;
+			String trialArray[] = new String[50];
+			String trialArray2[] = new String[50];
+			StringColumn thecolumn = null;
+			StringColumn mydeptcol= null;
+			int indexing =0;
+			
+			
+			for (Row row : hrAnalytics) { 				
+				//Extract everything in the row
+				String theName = row.getString("NAME");
+				Double theLeft = row.getDouble("Left");
+				//Double theNo = row.getDouble("No.");
+				Double theSL = row.getDouble("Satisfaction level");
+			    Double theLE= row.getDouble("Last Evaluation");
+			    Double theProjectsTaken = row.getDouble("No. of Projects Undertaken");
+			    Double theAMH = row.getDouble("Av monthly hours");
+			    //Double theTM = row.getDouble("Time Spent");
+			    Double theNOA = row.getDouble("No. of accidents");
+			    Double thePromo = row.getDouble("Promotion");
+			    String theDept = row.getString("Department");
+			    
+			    //Printing Everything
+			    System.out.println(theName);
+			    System.out.println("The SL1 is" +theSL );
+			    System.out.println("The LE is " +theLE);
+			    System.out.println("The projects taken is " +theProjectsTaken);
+			    System.out.println("The AVG is " + theAMH);
+			    System.out.println("The department is  " +theDept); 		    
+
+//			    if(theName.isEmpty() != true && theDept.isEmpty() != true) {			    	
+//			    	trialArray [indexing]=theDept;
+//			    	trialArray2 [indexing]=theName;
+//			    	indexing++;
+//			    				    	  
+//			    }
+			    if(theName.compareToIgnoreCase("Null") == 0 && theDept.compareToIgnoreCase("Null") == 0) {			    	
+			    	trialArray [indexing]=theDept;
+			    	trialArray2 [indexing]=theName;
+			    	indexing++;
+			    				    	  
+			    }
+			    
+			    
+			    else {
+			    	
+			    }
+			}
+						
+			StringColumn mydept = StringColumn.create("mydebt", trialArray);
+			StringColumn theName = StringColumn.create("theName", trialArray2);
+			Table droppedRows =Table.create("DroppedRows",mydept,theName);
+					
+			String tableShape2 = droppedRows.shape();
+			System.out.println(tableShape2);
+			System.out.println(tableShape);
+			
+			
+			//Accessing the first 15 rows of the table
+			System.out.println("Printing the first rows of the table");
+			Table tableHead5 = droppedRows.first(15);
+			System.out.println(tableHead5);
+
 		
 	}
 
