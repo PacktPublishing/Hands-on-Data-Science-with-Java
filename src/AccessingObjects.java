@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
+
 import com.mysql.fabric.xmlrpc.base.Array;
 
 import java.util.*;
@@ -148,6 +150,7 @@ public class AccessingObjects {
 	//Removing Columns with Missing data
 			//hrAnalytics.removeColumnsWithMissingValues();
 
+			
 	//Removing Rows with Missing data based on specific columns. Using a for loop
 					
 		//Creating arrays to Hold columns		
@@ -159,8 +162,12 @@ public class AccessingObjects {
 			List<Double>  leftList= new ArrayList<Double>();
 			List<Double>  promotionList= new ArrayList<Double>();
 			List<String>  debtList= new ArrayList<String>();
-
-	//Loopin gthrough the table to remove the rows with NANs
+			
+			//To be used for interpolation, double arrays
+			double [] SatisfactionLevel_raw = new double [50];
+			double [] LastEvaluation_raw = new double [50];
+			int index =0;
+		//Loopin gthrough the table to remove the rows with NANs
 			for (Row row : hrAnalytics) { 				
 				//Extract everything in the row
 				String theName = row.getString("NAME");
@@ -195,8 +202,13 @@ public class AccessingObjects {
 			    
 			    else {
 			    	
-			    }
+			    }		
+				//Adding the data for Interpolation
+			    SatisfactionLevel_raw[index] =theSL;
+				LastEvaluation_raw[index]=theLE;
+				index++;
 			}
+				
 			
 			//Creating columns to store the variables:
 			String[] nameArr =nameList.toArray(new String[SatisfactionLevelList.size()]);
@@ -218,8 +230,24 @@ public class AccessingObjects {
 			String tableShape2 = droppedRows.shape();
 			System.out.println(tableShape2);
 			System.out.println(tableShape);
+			
+			
 
+	
+		// Linear Interpolation
+		//Satisfaction Level (y) depends on Last Evaluation(X)
+			
+			//Creating an object of the class LinearInterpolrtor
+			LinearInterpolator myLinearInterp = new LinearInterpolator();
 
+			
+			
+			myLinearInterp.interpolate(SatisfactionLevel_raw, LastEvaluation_raw);
+/**
+ * Section 2.6
+ */
+
+			
 		
 	}
 
