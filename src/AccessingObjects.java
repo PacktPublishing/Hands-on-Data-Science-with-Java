@@ -262,8 +262,7 @@ public class AccessingObjects {
 		//Incase of Arrays with Int to double
 		int[] age = {30, 27, 52, 41, 20};
 		double[] double_age = Arrays.stream(age).asDoubleStream().toArray();
-			
-		
+					
 	}
 
 }
