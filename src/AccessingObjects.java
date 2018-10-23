@@ -243,10 +243,25 @@ public class AccessingObjects {
 			
 			
 			myLinearInterp.interpolate(SatisfactionLevel_raw, LastEvaluation_raw);
+			
+			
 /**
- * Section 2.6
- */
-
+ * Section 2.6 :Formatting various data types
+ */	
+					
+	//Check data types for the imported Columns
+	//Change the data type  of the columns
+					
+					
+	//Getting the table structures
+		System.out.println("Printing the structure of the table  loaded from my local machine");
+		Table tableDataType = hrAnalytics.structure();
+		System.out.println(tableDataType);
+		
+		
+		//Incase of Arrays with Int to double
+		int[] age = {30, 27, 52, 41, 20};
+		double[] double_age = Arrays.stream(age).asDoubleStream().toArray();
 			
 		
 	}
