@@ -1,5 +1,11 @@
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+
+import java.util.*;
 
 import tech.tablesaw.api.ColumnType;
 import tech.tablesaw.api.DoubleColumn;
@@ -143,21 +149,21 @@ public class AccessingObjects {
 			//hrAnalytics.removeColumnsWithMissingValues();
 
 	//Removing Rows with Missing data based on specific columns. Using a for loop
-			
-			
-			DoubleColumn mycolumn =null ;
-			String trialArray[] = new String[50];
-			String trialArray2[] = new String[50];
-			StringColumn thecolumn = null;
-			StringColumn mydeptcol= null;
-			int indexing =0;
-			
-			
+					
+		//Creating arrays to Hold columns		
+			List<String> nameList = new ArrayList<String>();
+			List<Double>  SatisfactionLevelList= new ArrayList<Double>();
+			List<Double>  LastEvaluationList= new ArrayList<Double>();
+			List<Double>  numProjectsList= new ArrayList<Double>();
+			List<Double>  aveMonHoursList= new ArrayList<Double>();
+			List<Double>  leftList= new ArrayList<Double>();
+			List<Double>  promotionList= new ArrayList<Double>();
+			List<String>  debtList= new ArrayList<String>();
+
+	//Loopin gthrough the table to remove the rows with NANs
 			for (Row row : hrAnalytics) { 				
 				//Extract everything in the row
 				String theName = row.getString("NAME");
-				Double theLeft = row.getDouble("Left");
-				//Double theNo = row.getDouble("No.");
 				Double theSL = row.getDouble("Satisfaction level");
 			    Double theLE= row.getDouble("Last Evaluation");
 			    Double theProjectsTaken = row.getDouble("No. of Projects Undertaken");
@@ -165,6 +171,7 @@ public class AccessingObjects {
 			    //Double theTM = row.getDouble("Time Spent");
 			    Double theNOA = row.getDouble("No. of accidents");
 			    Double thePromo = row.getDouble("Promotion");
+			    Double theLeft = row.getDouble("Left");
 			    String theDept = row.getString("Department");
 			    
 			    //Printing Everything
@@ -175,38 +182,50 @@ public class AccessingObjects {
 			    System.out.println("The AVG is " + theAMH);
 			    System.out.println("The department is  " +theDept); 		    
 
-//			    if(theName.isEmpty() != true && theDept.isEmpty() != true) {			    	
-//			    	trialArray [indexing]=theDept;
-//			    	trialArray2 [indexing]=theName;
-//			    	indexing++;
-//			    				    	  
-//			    }
-			    if(theName.compareToIgnoreCase("Null") == 0 && theDept.compareToIgnoreCase("Null") == 0) {			    	
-			    	trialArray [indexing]=theDept;
-			    	trialArray2 [indexing]=theName;
-			    	indexing++;
-			    				    	  
-			    }
 			    
+			    if(theName.length()!=0 && theDept.length()!=0 && theSL!=0 && theLE!=0 && theAMH!=0 && (theLeft==0 ||theLeft==1)) {
+			    	
+			    	nameList.add(theName);
+			    	SatisfactionLevelList.add(theSL);
+			    	LastEvaluationList.add(theLE);
+			    	aveMonHoursList.add(theAMH);
+			    	leftList.add(theLeft);
+			    	debtList.add(theDept);			    			    	  
+			    }
 			    
 			    else {
 			    	
 			    }
 			}
-						
-			StringColumn mydept = StringColumn.create("mydebt", trialArray);
-			StringColumn theName = StringColumn.create("theName", trialArray2);
-			Table droppedRows =Table.create("DroppedRows",mydept,theName);
+			
+			//Creating columns to store the variables:
+			String[] nameArr =nameList.toArray(new String[SatisfactionLevelList.size()]);
+			StringColumn name = StringColumn.create("name",nameArr);
+			Double[] SLArr = SatisfactionLevelList.toArray(new Double[SatisfactionLevelList.size()]);
+			DoubleColumn SL = DoubleColumn.create("SE",SLArr);
+			Double[] LEArr = LastEvaluationList.toArray(new Double[LastEvaluationList.size()]);
+			DoubleColumn LastE = DoubleColumn.create("Last Eva",LEArr);
+			Double[] aveHrsArr = aveMonHoursList.toArray(new Double[aveMonHoursList.size()]);
+			DoubleColumn aveHrs = DoubleColumn.create("Average hours",aveHrsArr);
+			Double[] leftListArr = leftList.toArray(new Double[leftList.size()]);
+			DoubleColumn theLeftList = DoubleColumn.create("Left List",leftListArr);		
+			String[] debtArr  = debtList.toArray(new String[debtList.size()]);
+			StringColumn deptcol = StringColumn.create("dept",debtArr);
+					
+			//Adding the columns to the table
+			Table droppedRows =Table.create("DroppedRows",name,SL,LastE,aveHrs,theLeftList,deptcol);
 					
 			String tableShape2 = droppedRows.shape();
 			System.out.println(tableShape2);
 			System.out.println(tableShape);
 			
 			
-			//Accessing the first 15 rows of the table
-			System.out.println("Printing the first rows of the table");
-			Table tableHead5 = droppedRows.first(15);
-			System.out.println(tableHead5);
+//			//Accessing the first 15 rows of the table
+//			System.out.println("Printing the first rows of the table");
+//			Table tableHead5 = droppedRows.first(15);
+//			System.out.println(tableHead5);
+//			
+//			System.out.println("The length of the array List is" +nameList.size());
 
 		
 	}
