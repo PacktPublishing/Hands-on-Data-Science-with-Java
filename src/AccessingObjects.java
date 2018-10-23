@@ -218,14 +218,7 @@ public class AccessingObjects {
 			String tableShape2 = droppedRows.shape();
 			System.out.println(tableShape2);
 			System.out.println(tableShape);
-			
-			
-//			//Accessing the first 15 rows of the table
-//			System.out.println("Printing the first rows of the table");
-//			Table tableHead5 = droppedRows.first(15);
-//			System.out.println(tableHead5);
-//			
-//			System.out.println("The length of the array List is" +nameList.size());
+
 
 		
 	}
