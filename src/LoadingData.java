@@ -1,9 +1,7 @@
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import tech.tablesaw.api.ColumnType;
 import tech.tablesaw.api.Table;
-import tech.tablesaw.io.csv.CsvReadOptions;
 import java.io.*;
 ;/**
  * Video 2.1 : Loading data from different sources
@@ -84,6 +82,37 @@ public class LoadingData {
 		//Testing  the output from the API
 		Table streamStructure = HRAnalyticsTable.structure();
 		System.out.println(streamStructure);			
-	}
+	
+		
 
+	/**
+	 * We will be focussing on different ways to handle the missing data
+	 * Removing the  missing data i.e the rows and the columns
+	 * Linear interpolation , Last observation carried forward,  Next observation carried forward
+	 * 
+	 */
+			
+	//Removing Columns with Missing data
+	//hrAnalytics.removeColumnsWithMissingValues();
+
+				
+
+			
+	
+			
+			
+}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
