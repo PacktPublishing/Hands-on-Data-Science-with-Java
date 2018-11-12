@@ -23,8 +23,10 @@ public class DataDistribution {
 		
 /**
  * Section 3.1 :Efficient distribution of the data
- * Getting the mean, mode and the median
+ * Getting the mean,max, min and the median
  * Using Split Apply Combine Functions
+ * //Reference :http://www.javadoc.io/doc/tech.tablesaw/tablesaw-core/0.23.2
+ * Has other functions depending on dataset
  */
 		Table diabetesData  = Table.read().csv("../Diabetes_Data.csv");
 		
@@ -39,19 +41,17 @@ public class DataDistribution {
 		NumberColumn bmi = diabetesData.nCol("BMI");
 		
 	// Making use of the inbuild function ( Summarize)
-		Table ageDistribution = diabetesData.summarize(Age, mean, max, min).apply();
+		Table ageDistribution = diabetesData.summarize(Age, mean, max, min, median).apply();
 		System.out.println(ageDistribution);
 		
-		Table bmiDistribution = diabetesData.summarize(bmi, mean, max, min).apply();
+		Table bmiDistribution = diabetesData.summarize(bmi, mean, max, min, median).apply();
 		System.out.println(bmiDistribution);	
 		
 	// Calculating the mean AGE, min ans max by SEX, where 1 is female and 2 
 		Table avgAge  = diabetesData.summarize("AGE", mean, max, min,median).by("SEX");
 		System.out.println(avgAge);
-	
-	/**
-	 * Calculating the Median and Mode
-	 */
+
+
 		
 /**
  * Section 3.2 :Correlation in the data
