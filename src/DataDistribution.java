@@ -4,11 +4,14 @@ import java.io.IOException;
 import org.tc33.jheatchart.HeatChart;
 
 import smile.data.parser.ArffParser;
+import smile.plot.Palette;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.Plot;
 import tech.tablesaw.plotly.api.Heatmap;
+import tech.tablesaw.plotly.api.HorizontalBarPlot;
+import tech.tablesaw.plotly.api.PiePlot;
 import tech.tablesaw.plotly.api.ScatterPlot;
 import tech.tablesaw.plotly.api.TimeSeriesPlot;
 import tech.tablesaw.plotly.components.Figure;
@@ -32,6 +35,22 @@ public class DataDistribution {
 
 	public DataDistribution() {
 		// TODO Auto-generated constructor stub
+	}
+	
+
+
+	public static double[][] transpose(double arr[][]){
+	    int m = arr.length;
+	    int n = arr[0].length;
+	    double ret[][] = new double[n][m];
+	
+	    for (int i = 0; i < m; i++) {
+	        for (int j = 0; j < n; j++) {
+	            ret[j][i] = arr[i][j];
+	        }
+	    }
+	
+	    return ret;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -127,19 +146,42 @@ public class DataDistribution {
 //Creating a HeatMap with Smile
 
 System.out.println("We are here");
+double[][] transposedDiabetesData = transpose(mycombinedDiabetes);
 
 smile.plot.Heatmap test = new smile.plot.Heatmap(mycombinedDiabetes);
 smile.plot.Heatmap.plot(mycombinedDiabetes);
-
 System.out.println("We  are done with wmile");
-	
+
+smile.plot.Heatmap.plot(mycombinedDiabetes, Palette.jet(256));
+
+
+//Creating a scatter plot instead!
+
+String [] myLabels = {"AGE", "SEX","BMI","BP","S1","S2","S3","S4","S5","S6","Y"};
+
+
+//smile.plot.ScatterPlot  mySmileScatter = new smile.plot.ScatterPlot(mycombinedDiabetes,myLabels);
+System.out.println(mynewTable.length);
+System.out.println( myLabels.length);
+//
+
+//double[][] transposedDiabetesData = transpose(mycombinedDiabetes);
+System.out.println(transposedDiabetesData.length);
+
+smile.plot.ScatterPlot  mySmileScatter = new smile.plot.ScatterPlot(transposedDiabetesData,myLabels);
+System.out.println(mySmileScatter);
+//plot(data: Array[Array[Double]], labels: Array[String]): Window
+
+//smile.plot.ScatterPlot.plot(transposedDiabetesData,myLabels);
+//: Window;
+
 		
 /**
  *  Section 3.3 :Trend Analysis for Feature
  *  In this section we will use Financial data from Quandal
  */
 	
-// Getting data from Quandl
+
 	
 	
 	
@@ -151,9 +193,33 @@ System.out.println("We  are done with wmile");
  * Number (bar charts)
  */
 		
-		
-		
+//Creating Bar Charts
+	
+Table ageAverage = diabetesData.summarize("AGE", mean).by("SEX");
+Plot.show(
+    HorizontalBarPlot.create(
+                " Average Age by SEX",		// plot title
+                ageAverage,				// Calculated averages of the aGE
+                "SEX",					// grouping column name
+                "mean [AGE]"));	
 
+//Showcase AVG BMI by Age
+Table bmiAverage = diabetesData.summarize("BMI", mean).by("AGE");
+Plot.show(
+    HorizontalBarPlot.create(
+                " Average BMI by AGE",		// plot title
+                bmiAverage,				// Calculated averages of the aGE
+                "AGE",					// grouping column name
+                "mean [BMI]"));	
+
+
+//Using Pie Chart to showcase average age by SEX
+Plot.show(
+	    PiePlot.create("Average Age by SEX", ageAverage, "SEX", "mean [AGE]")); 
+
+
+//Visualizing words  using wordcloud
+		
 	}
 
 }
