@@ -8,13 +8,44 @@
   	<dependency>
   		<groupId>tech.tablesaw</groupId>
 	    <artifactId>tablesaw-core</artifactId>
-	    <version>LATEST</version>
+	    <version>0.25.2</version>
   	</dependency>
+  	<dependency>
+	    <groupId>tech.tablesaw</groupId>
+	    <artifactId>tablesaw-jsplot</artifactId>
+	    <version>0.25.2</version>
+	</dependency>
+	<dependency>
+      	<groupId>com.github.haifengl</groupId>
+      	<artifactId>smile-core</artifactId>
+      	<version>1.5.2</version>
+    </dependency>
+    <dependency>
+      	<groupId>com.github.haifengl</groupId>
+      	<artifactId>smile-netlib</artifactId>
+      	<version>1.5.2</version>
+    </dependency>
+    <dependency>
+      	<groupId>com.github.haifengl</groupId>
+      	<artifactId>smile-plot</artifactId>
+      	<version>1.5.2</version>
+    </dependency>
+    
   	<dependency>
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>5.1.39</version>
 	</dependency>
+	<dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <version>1.7.5</version>
+   </dependency>
+   <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-simple</artifactId>
+       <version>1.6.4</version>
+   </dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>

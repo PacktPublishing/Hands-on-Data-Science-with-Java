@@ -1,8 +1,24 @@
+import java.io.File;
 import java.io.IOException;
 
+import org.tc33.jheatchart.HeatChart;
+
+import smile.data.parser.ArffParser;
+import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
+import tech.tablesaw.plotly.Plot;
+import tech.tablesaw.plotly.api.Heatmap;
+import tech.tablesaw.plotly.api.ScatterPlot;
+import tech.tablesaw.plotly.api.TimeSeriesPlot;
+import tech.tablesaw.plotly.components.Figure;
+import tech.tablesaw.plotly.traces.HeatmapTrace;
+import tech.tablesaw.util.DoubleArrays;
+
 import static tech.tablesaw.aggregate.AggregateFunctions.*;
+import java.lang.*;
+import java.util.stream.Stream;
+
 
 /**
  * @author rwangari
@@ -11,6 +27,7 @@ import static tech.tablesaw.aggregate.AggregateFunctions.*;
  */
 
 
+@SuppressWarnings("unused")
 public class DataDistribution {
 
 	public DataDistribution() {
@@ -55,15 +72,78 @@ public class DataDistribution {
 		
 /**
  * Section 3.2 :Correlation in the data
- * One feature ( Scatter plot)
+ * One feature ( Scatter plot) vs another feature
  * Many features (Heatmap)
  */
+
+	
+		
+	//Creating the table with the columns that will be used for the scatter plot
+		
+	Table theScatterData =Table.create("theScatterData",Age,bmi);
+	Figure scatterFigure = ScatterPlot.create("Age by BMI ", theScatterData, "Age", "Bmi");
+	Plot.show(scatterFigure);
+	
+	//Time series
+	//Plot.show(TimeSeriesPlot.create("", foxOnly, "date", "approval"));
+		
+//Creating a heatMap of  of the dataset : dropping the sex Column and creating a heatmap
+	
+	Figure theHeatMap = Heatmap.create("Correlation of the different variables ", 
+			diabetesData,"AGE","BMI");
+	
+	Plot.show(theHeatMap);
+	
+//Changing a table to a double [][]
+	
+	DoubleColumn theAge=(DoubleColumn)diabetesData.nCol("AGE");
+	DoubleColumn theBMI =(DoubleColumn)diabetesData.nCol("BMI");
+	Figure newHeatMap = Heatmap.create("Trial ", diabetesData,"S3", "S4");
+	Plot.show(newHeatMap);
+	
+//Solution Moving Forward (Converting a Table to double [][]);	
+	
+	double [] onearray = new double[10];
+	double [] twoarray = new double[10];
+	
+	//double [][] mycombinedArray = new double[100][10];
+	//mycombinedArray.
+	
+	// Step 1
+	double [][] mycombinedDiabetes = DoubleArrays.to2dArray(diabetesData.numberColumns());
+	HeatChart map = new HeatChart(mycombinedDiabetes);
+	
+	// Step 2: Customizing the Chart
+	map.setTitle("Correlation in diabetes data");
+	map.setXAxisLabel("X Axis");
+	map.setYAxisLabel("Y Axis");
+
+	//Step 3: Output the chart to a file.
+	map.saveToFile(new File("diabetes-heat-chart.png"));
+
+//Converting a table to double dimensional array:
+	double [][] mynewTable =diabetesData.as().doubleMatrix();
+	
+//Creating a HeatMap with Smile
+
+System.out.println("We are here");
+
+smile.plot.Heatmap test = new smile.plot.Heatmap(mycombinedDiabetes);
+smile.plot.Heatmap.plot(mycombinedDiabetes);
+
+System.out.println("We  are done with wmile");
 	
 		
 /**
  *  Section 3.3 :Trend Analysis for Feature
- *  
+ *  In this section we will use Financial data from Quandal
  */
+	
+// Getting data from Quandl
+	
+	
+	
+	
 
 /**
  * Section 3.4 : Visualizing different data forms
