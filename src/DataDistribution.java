@@ -10,6 +10,7 @@ import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.Plot;
 import tech.tablesaw.plotly.api.Heatmap;
+//import tech.tablesaw.plotly.api.Pareto;
 import tech.tablesaw.plotly.api.HorizontalBarPlot;
 import tech.tablesaw.plotly.api.PiePlot;
 import tech.tablesaw.plotly.api.ScatterPlot;
@@ -219,6 +220,17 @@ Plot.show(
 
 
 //Visualizing words  using wordcloud
+
+// Loading a new Set of data
+Table kamitiData  = Table.read().csv("../KAMITI_Msgs.csv");
+Table kamiti = kamitiData.structure();
+System.out.println(kamiti);
+
+
+
+
+
+
 		
 	}
 

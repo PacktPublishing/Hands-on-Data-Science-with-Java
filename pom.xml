@@ -15,6 +15,7 @@
 	    <artifactId>tablesaw-jsplot</artifactId>
 	    <version>0.25.2</version>
 	</dependency>
+<!-- Adding Smile dependencies to help with Analytics, ML etc advanced -->
 	<dependency>
       	<groupId>com.github.haifengl</groupId>
       	<artifactId>smile-core</artifactId>
@@ -30,7 +31,7 @@
       	<artifactId>smile-plot</artifactId>
       	<version>1.5.2</version>
     </dependency>
-    
+    <!-- Adding MYSQL dependency for connection to MYSQL database -->
   	<dependency>
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
@@ -46,6 +47,18 @@
        <artifactId>slf4j-simple</artifactId>
        <version>1.6.4</version>
    </dependency>
+   
+   <!-- Word Cloud dependency (KUMO)-->
+   <dependency>
+	    <groupId>com.kennycason</groupId>
+	    <artifactId>kumo-core</artifactId>
+	    <version>1.17</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.kennycason</groupId>
+	    <artifactId>kumo-tokenizers</artifactId>
+	    <version>1.17</version>
+	</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
