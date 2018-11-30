@@ -1,12 +1,24 @@
 import java.io.File;
 import java.io.IOException;
-
+import java.awt.Color;
+import java.awt.Dimension;
+import java.io.*;
 import org.tc33.jheatchart.HeatChart;
+
+import com.kennycason.kumo.CollisionMode;
+import com.kennycason.kumo.WordCloud;
+import com.kennycason.kumo.WordFrequency;
+import com.kennycason.kumo.bg.PixelBoundryBackground;
+import com.kennycason.kumo.bg.RectangleBackground;
+import com.kennycason.kumo.font.scale.LinearFontScalar;
+import com.kennycason.kumo.nlp.FrequencyAnalyzer;
+import com.kennycason.kumo.palette.ColorPalette;
 
 import smile.data.parser.ArffParser;
 import smile.plot.Palette;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.NumberColumn;
+import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.Plot;
 import tech.tablesaw.plotly.api.Heatmap;
@@ -21,25 +33,25 @@ import tech.tablesaw.util.DoubleArrays;
 
 import static tech.tablesaw.aggregate.AggregateFunctions.*;
 import java.lang.*;
+import java.util.List;
 import java.util.stream.Stream;
-
 
 /**
  * @author rwangari
  * Section 3
  *
  */
-
-
-@SuppressWarnings("unused")
 public class DataDistribution {
 
 	public DataDistribution() {
 		// TODO Auto-generated constructor stub
 	}
 	
-
-
+	/**
+	 * A function to transpose a two dimensional array
+	 * @param arr
+	 * @return double [][]
+	 */
 	public static double[][] transpose(double arr[][]){
 	    int m = arr.length;
 	    int n = arr[0].length;
@@ -52,6 +64,97 @@ public class DataDistribution {
 	    }
 	
 	    return ret;
+	}
+
+	/**
+	 * A function to write words from String Column from the table to a file .txt
+	 * @param mywords
+	 * @return void
+	 */
+	public static void writeToMyFile(StringColumn mywords) {
+		
+		FileWriter myWriter = null;
+		try {
+			myWriter = new FileWriter("wordcloud.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		String [] myWordsArr = (String[]) mywords.asObjectArray();
+		
+	    for (int i = 0; i < myWordsArr.length; i++) {
+	      try {
+	    	  myWriter.write(myWordsArr[i] + "\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    }
+	    try {
+	    	myWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * Function adopted from KUMO library for creating wordcloud
+	 * @param theFileWords( file containing words  for wordcloud to analyze)
+	 * @param imageToSave(.png)
+	 * @return void
+	 */
+	public static void creatWorldCloud(String theFileWords, String imageToSave){
+		final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
+		List<WordFrequency> wordFrequencies = null;
+		try {
+			wordFrequencies = frequencyAnalyzer.load("theFileWords");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("File was not found");
+		}
+		final Dimension dimension = new Dimension(300, 300);
+		final WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);
+		wordCloud.setPadding(0);
+		wordCloud.setBackground(new RectangleBackground(dimension));
+		wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));
+		wordCloud.setFontScalar(new LinearFontScalar(10, 40));
+		wordCloud.build(wordFrequencies);
+		wordCloud.writeToFile("imageToSave");
+	}
+	
+	/**
+	 * A function adopted from KUMO libraly for creating wordCloud
+	 * @param theFileWords
+	 * @return void
+	 */
+	public static void createWordCloud2(String heFileWords) {
+		final FrequencyAnalyzer myFrequencyAnalyzer = new FrequencyAnalyzer();
+		myFrequencyAnalyzer.setWordFrequenciesToReturn(300);
+		myFrequencyAnalyzer.setMinWordLength(4);
+		//myFrequencyAnalyzer.setStopWords(loadStopWords());
+
+		List<WordFrequency> myWordFrequencies = null;
+		try {
+			myWordFrequencies = myFrequencyAnalyzer.load(theFileWords);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		final Dimension myDimension = new Dimension(500, 312);
+		final WordCloud myWordCloud = new WordCloud(myDimension, CollisionMode.PIXEL_PERFECT);
+		myWordCloud.setPadding(2);
+		
+		
+		myWordCloud.setBackground(new RectangleBackground(myDimension));
+		myWordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));
+		myWordCloud.setFontScalar(new LinearFontScalar(10, 40));
+		myWordCloud.build(myWordFrequencies);
+		myWordCloud.writeToFile("wordcloud3.png");
+		
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -222,9 +325,20 @@ Plot.show(
 //Visualizing words  using wordcloud
 
 // Loading a new Set of data
-Table kamitiData  = Table.read().csv("../KAMITI_Msgs.csv");
+Table kamitiData  = Table.read().csv("../KAMITI.csv");
 Table kamiti = kamitiData.structure();
 System.out.println(kamiti);
+
+// Calling to writeToMyFile
+//writeToMyFile
+StringColumn theText = (StringColumn)kamitiData.column("Text");
+writeToMyFile(theText);
+
+//Using KUMO
+
+//WordCloud3
+createWordCloud("wordcloud.txt");
+
 
 
 
