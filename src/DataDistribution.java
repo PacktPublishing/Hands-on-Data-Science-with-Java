@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.io.*;
 import org.tc33.jheatchart.HeatChart;
 
+import com.jimmoores.quandl.DataSetRequest;
+import com.jimmoores.quandl.tablesaw.TableSawQuandlSession;
 import com.kennycason.kumo.CollisionMode;
 import com.kennycason.kumo.WordCloud;
 import com.kennycason.kumo.WordFrequency;
@@ -43,8 +45,10 @@ import java.util.stream.Stream;
  */
 public class DataDistribution {
 
+	/*
+	 * Constructor
+	 */
 	public DataDistribution() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
@@ -106,11 +110,11 @@ public class DataDistribution {
 	 * @param imageToSave(.png)
 	 * @return void
 	 */
-	public static void creatWorldCloud(String theFileWords, String imageToSave){
+	public static void createWordCloud(String theFileWords){
 		final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
 		List<WordFrequency> wordFrequencies = null;
 		try {
-			wordFrequencies = frequencyAnalyzer.load("theFileWords");
+			wordFrequencies = frequencyAnalyzer.load(theFileWords);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,7 +127,7 @@ public class DataDistribution {
 		wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));
 		wordCloud.setFontScalar(new LinearFontScalar(10, 40));
 		wordCloud.build(wordFrequencies);
-		wordCloud.writeToFile("imageToSave");
+		wordCloud.writeToFile("wordcloudToSave1.png");
 	}
 	
 	/**
@@ -131,7 +135,7 @@ public class DataDistribution {
 	 * @param theFileWords
 	 * @return void
 	 */
-	public static void createWordCloud2(String heFileWords) {
+	public static void createWordCloud2(String theFileWords) {
 		final FrequencyAnalyzer myFrequencyAnalyzer = new FrequencyAnalyzer();
 		myFrequencyAnalyzer.setWordFrequenciesToReturn(300);
 		myFrequencyAnalyzer.setMinWordLength(4);
@@ -153,13 +157,14 @@ public class DataDistribution {
 		myWordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));
 		myWordCloud.setFontScalar(new LinearFontScalar(10, 40));
 		myWordCloud.build(myWordFrequencies);
-		myWordCloud.writeToFile("wordcloud3.png");
-		
+		myWordCloud.writeToFile("wordcloud2.png");
 	}
-
+	
+	/*
+	 * Main Class to  test all functions
+	 */
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		
 		
 /**
  * Section 3.1 :Efficient distribution of the data
@@ -198,17 +203,11 @@ public class DataDistribution {
  * One feature ( Scatter plot) vs another feature
  * Many features (Heatmap)
  */
-
-	
-		
 	//Creating the table with the columns that will be used for the scatter plot
 		
 	Table theScatterData =Table.create("theScatterData",Age,bmi);
 	Figure scatterFigure = ScatterPlot.create("Age by BMI ", theScatterData, "Age", "Bmi");
 	Plot.show(scatterFigure);
-	
-	//Time series
-	//Plot.show(TimeSeriesPlot.create("", foxOnly, "date", "approval"));
 		
 //Creating a heatMap of  of the dataset : dropping the sex Column and creating a heatmap
 	
@@ -282,14 +281,15 @@ System.out.println(mySmileScatter);
 		
 /**
  *  Section 3.3 :Trend Analysis for Feature
- *  In this section we will use Financial data from Quandal
+ *  In this section
  */
-	
 
-	
-	
-	
-	
+Table bitconPriceData  = Table.read().csv("Bitcoin-usd.csv");
+Table bitprice = bitconPriceData.structure();
+System.out.println(bitprice);
+
+//Time series data trend Analysis
+Plot.show(TimeSeriesPlot.create("Bitcoin Exchange Prices in USD", bitconPriceData, "Date", "High"));
 
 /**
  * Section 3.4 : Visualizing different data forms
@@ -322,29 +322,25 @@ Plot.show(
 	    PiePlot.create("Average Age by SEX", ageAverage, "SEX", "mean [AGE]")); 
 
 
-//Visualizing words  using wordcloud
+/*
+ * Visualizing words  using wordcloud
+ */
 
 // Loading a new Set of data
 Table kamitiData  = Table.read().csv("../KAMITI.csv");
 Table kamiti = kamitiData.structure();
 System.out.println(kamiti);
 
-// Calling to writeToMyFile
-//writeToMyFile
+/*
+ *  Calling to writeToMyFile function
+ */
+
 StringColumn theText = (StringColumn)kamitiData.column("Text");
 writeToMyFile(theText);
 
-//Using KUMO
 
-//WordCloud3
 createWordCloud("wordcloud.txt");
-
-
-
-
-
-
-
+createWordCloud2("wordcloud.txt");
 		
 	}
 

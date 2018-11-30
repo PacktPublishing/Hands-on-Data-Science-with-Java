@@ -72,6 +72,7 @@ public class LoadingData {
 		 * The data has to be passed through the Stream Interface
 		 * You need to have the link to where the data is located and the name of the file that you want to retrieve.
 		 */		
+		//https://www.quandl.com/api/v3/datasets/WIKI/AAPL.csv
 		
 		String location =  "https://raw.githubusercontent.com/jtablesaw/tablesaw/master/data/bush.csv";
 		Table HRAnalyticsTable;

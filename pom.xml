@@ -48,6 +48,20 @@
        <version>1.6.4</version>
    </dependency>
    
+   <!-- Connecting to quandl  dependencies using Table Saw(Quandl4j)-->
+   <dependency>
+	  <groupId>com.jimmoores</groupId>
+	  <artifactId>quandl-core</artifactId>
+	  <version>2.0.0</version>
+   </dependency>
+   
+   <dependency>
+	  <groupId>com.jimmoores</groupId>
+	  <artifactId>quandl-tablesaw</artifactId>
+	  <version>2.0.0</version>
+   </dependency>
+   
+   
    <!-- Word Cloud dependency (KUMO)-->
    <dependency>
 	    <groupId>com.kennycason</groupId>
