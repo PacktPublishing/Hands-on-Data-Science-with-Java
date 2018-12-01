@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Average Age by SEX</title>
+<!--
+    <script src="src/main/resources/plotly-latest.min.js"></script>
+-->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id='target' ></div>
+        <script>
+        var target_target = document.getElementById('target');
+        var layout = {
+    title: 'Average Age by SEX',
+    height: 600,
+    width: 800,
+
+};
+
+var trace0 =
+    {
+        labels: ['1.0','2.0'],
+        values: [46.38297872340426, 50.94202898550725],
+        type: 'pie',
+        name: '',
+ }
+
+        var data = [ trace0];
+Plotly.newPlot(target_target, data, layout);    </script>
+
+</body>
+</html>

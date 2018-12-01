@@ -15,7 +15,7 @@ import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Row;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-import tech.tablesaw.filtering.Filter;
+//import tech.tablesaw.filtering.Filter;
 import tech.tablesaw.io.csv.CsvReadOptions;
 import tech.tablesaw.selection.Selection;
 
