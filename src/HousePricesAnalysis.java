@@ -1,5 +1,8 @@
 import java.io.IOException;
 
+import org.apache.commons.math3.stat.regression.SimpleRegression;
+
+import smile.regression.OLS;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.io.csv.CsvReadOptions;
 import tech.tablesaw.selection.Selection;
@@ -81,6 +84,14 @@ public class HousePricesAnalysis {
 			System.out.println(table3Tail);
 			
 
+
+			
+
+
+
+			
+//		public OLS train(double[][] x,
+//			                    double[] y)
 	
 	}
 
