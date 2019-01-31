@@ -84,12 +84,10 @@ public class HouseLinearRegression {
 	 */
 	
 	Table AllPricesHouse  = Table.read().csv("DataSets/HousePricesAll.csv");
-	
-	
-	Table tableTail10 = AllPricesHouse.last(5);
-	System.out.println(tableTail10);
-	
+
+	//Dropping the rows with the missing values
 	Table myNewTableHousePrices = AllPricesHouse.dropRowsWithMissingValues();
+	
 	System.out.println("Printing the last  rows of the table");
 	Table tableTail = myNewTableHousePrices.last(5);
 	System.out.println(tableTail);
