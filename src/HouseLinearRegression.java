@@ -9,6 +9,11 @@ import tech.tablesaw.selection.Selection;
 import tech.tablesaw.util.DoubleArrays;
 
 public class HouseLinearRegression {
+	
+	/**
+	 * Section 4
+	 * Video 4.2
+	 */
 
 	public HouseLinearRegression() {
 		// TODO Auto-generated constructor stub

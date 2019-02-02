@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import smile.classification.Classifier;
 import smile.classification.NaiveBayes;
@@ -118,8 +119,15 @@ public class IrisFlowersClassification {
      /**
       * Testing the accuracy of SVM model
       */
-          
-         
+        // For the Linear Kernel
+        System.out.println((irisIndependentTestArr.length - error));
+       double linearAccuracy =(double)(((double)irisIndependentTestArr.length - error)/((double)irisIndependentTestArr.length)*100);
+        //For theGaussian Kernel
+       double gaussianAccuracy =(double)(((double)irisIndependentFull.length - theError)/(double)irisIndependentFull.length)*100;
+      
+		DecimalFormat df = new DecimalFormat("###.##");
+       System.out.println("The accuracy for the linear SVM model is"+df.format(linearAccuracy));
+       System.out.println("The accuracy for the Gaussian SVM model is"+df.format(gaussianAccuracy));     
          
          
 		
