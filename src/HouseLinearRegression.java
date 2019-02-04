@@ -8,13 +8,12 @@ import tech.tablesaw.columns.Column;
 import tech.tablesaw.selection.Selection;
 import tech.tablesaw.util.DoubleArrays;
 
+/**
+ * Supervised Learning: Linear Regression on Housing dataset
+ * @author rwangari
+ *Section 4.2
+ */
 public class HouseLinearRegression {
-	
-	/**
-	 * Section 4
-	 * Video 4.2
-	 */
-
 	public HouseLinearRegression() {
 		// TODO Auto-generated constructor stub
 		
@@ -111,7 +110,6 @@ public class HouseLinearRegression {
 	
 	
 	//Splitting the table into two (Independent vs Dependent)
-	//Table AllPricesHouseDependent = (Table)myNewTableHousePrices.retainColumns("SalePrices");
 	NumberColumn AllPricesHouseDependent = myNewTableHousePrices.numberColumn(20);
 	Table AllPricesHouseIndependent = (Table)myNewTableHousePrices.removeColumns("SalePrices");
 		
