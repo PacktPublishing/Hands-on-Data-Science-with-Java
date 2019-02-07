@@ -6,6 +6,10 @@ import static tech.tablesaw.aggregate.AggregateFunctions.min;
 import java.io.IOException;
 
 import smile.clustering.KMeans;
+import smile.plot.Heatmap;
+import smile.plot.Palette;
+import smile.plot.PlotCanvas;
+import smile.plot.ScatterPlot;
 import smile.validation.AdjustedRandIndex;
 import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
@@ -80,36 +84,38 @@ public class CustomerClustering {
 		double [][] customerSegmentationTest_Arr =customerSegmentationTest.as().doubleMatrix();
 		
 		/**
+		 * Plotting the dataset
+		 */
+		
+		System.out.println("We are plotting heatmap");
+		PlotCanvas canvas = Heatmap.plot(customerSegmentationTrain_Arr, Palette.jet(256));
+		System.out.println("We are done plotting");
+		
+		ScatterPlot myScatter = new ScatterPlot(customerSegmentationTrain_Arr);
+		System.out.println(myScatter);
+		
+		/**
 		 * Fitting the KMeans Model
 		 */
-		 KMeans kmeans = new KMeans(customerSegmentationTrain_Arr,3, 100, 4);
-		 int zero = 0, one = 0 , two = 0 ,three =0;
+		 KMeans kmeans = new KMeans(customerSegmentationTrain_Arr,4, 100, 20);	
+		 System.out.println(kmeans);
+		 //Plotting the dataset
 		 
 		 
-		 //Printing the total items in a cluster
+		/**
+		 * Testing our K means Model
+		 */
 		 
-		 for (int i =0; i<kmeans.getClusterLabel().length;i++) {
-			 if(kmeans.getClusterLabel()[i]==0) {
-				 zero++;
-			 }
-			 else if(kmeans.getClusterLabel()[i]==1) {
-				 one++;
-			 }
-			 else if(kmeans.getClusterLabel()[i]==2) {
-				 two++;
-			 }else {
-				 three++;
-			 } 
-		 }
-		 
-		 System.out.println("Cluster 1" +zero + "Second" + one+  "Third" +two+ "Fourth" +three);
-		 
-		// System.out.println("Printing the number of centroids"+ kmeans.centroids().length);
-		 
-		//AdjustedRandIndex ari = new AdjustedRandIndex();
-		 
-		//System.out.println("We are done creating a kmeans classification thing");
-		
+		 double [] theX = {10290,1981,2232,1038,168,2125};
+		 System.out.println("we printing shit"+ kmeans.predict(theX));
+		 System.out.println("we printing " +kmeans.getClusterLabel()[8]);
+		 System.out.println("we printing " +kmeans.getClusterSize()[1]);
+		 System.out.println("we printing "+kmeans.centroids()[0][0]);
+		// System.out.println("we printing "+kmeans.lloyd(customerSegmentationTrain_Arr, 4,100, 4));
+
+
+  
+  
 	}
 
 }

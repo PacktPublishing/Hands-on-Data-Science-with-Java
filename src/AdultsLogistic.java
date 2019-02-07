@@ -1,11 +1,12 @@
+
 import java.io.IOException;
 
-import tech.tablesaw.api.NumberColumn;
+import smile.classification.LogisticRegression;
+import smile.math.Math;
+import smile.validation.LOOCV;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.selection.Selection;
-
-import java.util.*;
 
 /**
  * Logistic Regression using Adult Dataset
@@ -15,9 +16,6 @@ import java.util.*;
 
 public class AdultsLogistic {
 	
-	//public static Table adultsDataset  = Table.read().csv("DataSets/adult.csv");
-	
-
 	public AdultsLogistic() {
 		// TODO Auto-generated constructor stub
 	}
@@ -64,14 +62,14 @@ public class AdultsLogistic {
 	
 	public static Table classifyWorkingClass (Table mytable) {
 		StringColumn workingClass = mytable.stringColumn("workclass");
-		workingClass.set(workingClass.equalsIgnoreCase("Without-pay"), "Unemployed");
-		workingClass.set(workingClass.equalsIgnoreCase("Never-worked"), "Unemployed");
-		workingClass.set(workingClass.equalsIgnoreCase("State-gov"), "Goverment-Worker");
-		workingClass.set(workingClass.equalsIgnoreCase("Local-gov"), "Goverment-Worker");
-		workingClass.set(workingClass.equalsIgnoreCase("Federal-gov"),"Goverment-Worker");
-		workingClass.set(workingClass.equalsIgnoreCase("Self-emp-inc"), "Self-Employed");
-		workingClass.set(workingClass.equalsIgnoreCase("Self-emp-not-inc"), "Self-Employed");
-		workingClass.set(workingClass.equalsIgnoreCase("Private"), "Self-Employed");
+		workingClass.set(workingClass.equalsIgnoreCase("Without-pay"), "-1");
+		workingClass.set(workingClass.equalsIgnoreCase("Never-worked"),"-1");
+		workingClass.set(workingClass.equalsIgnoreCase("State-gov"), "0");
+		workingClass.set(workingClass.equalsIgnoreCase("Local-gov"), "0");
+		workingClass.set(workingClass.equalsIgnoreCase("Federal-gov"),"0");
+		workingClass.set(workingClass.equalsIgnoreCase("Self-emp-inc"), "1");
+		workingClass.set(workingClass.equalsIgnoreCase("Self-emp-not-inc"), "1");
+		workingClass.set(workingClass.equalsIgnoreCase("Private"), "1");
 		workingClass.set(workingClass.equalsIgnoreCase("?"), "NAN");
 		Table newTable = (Table) mytable.removeColumns("workclass");
 		newTable.addColumns(workingClass);	
@@ -130,6 +128,8 @@ public class AdultsLogistic {
 		Table cleanTable = mytable.dropRowsWithMissingValues();
 		return cleanTable;
 	}
+	
+	//public static 
 
 
 	public static void main(String[] args) throws IOException {
@@ -182,13 +182,61 @@ public class AdultsLogistic {
 	 * Splitting the data to training and Testing set
 	 * using 70:30 split
 	 */
-		
-		//Table adultIndependentTrain = (Table)adultIndependent.where(Selection.withRange(1,727));
-		//Table adultIndependentTest =  (Table)adultIndependent.where(Selection.withRange(728,1127));
+				
+		Table adultIndependentTrain = (Table)adultIndependent.where(Selection.withRange(1,20000));
+		Table adultIndependentTest =  (Table)adultIndependent.where(Selection.withRange(20001,48835));
 		
 		//Dependent
-		//NumberColumn AllPricesHouseTrainDependent = (NumberColumn)AllPricesHouseDependent.where(Selection.withRange(1,727));
-		//NumberColumn AllPricesHouseTestDependent =  (NumberColumn)AllPricesHouseDependent.where(Selection.withRange(728,1127));
+		StringColumn adultDependentTrain = (StringColumn)adultDependent.where(Selection.withRange(1,20000));
+		StringColumn adultDependentTest =  (StringColumn)adultDependent.where(Selection.withRange(20001,48835));
+		
+		
+		/**
+		 * Changing the train and test from table to double
+		 */
+		
+		double [][] adultIndependentTrainArr = adultIndependentTrain.as().doubleMatrix();
+		int[]  adultDependentTrainArr =adultDependentTrain.asIntArray();
+		
+		
+		
+		/**
+		 * Fitting the Model to linear regression directly
+		 */
+		
+		LogisticRegression logit1 = new LogisticRegression(adultIndependentTrainArr, adultDependentTrainArr);
+		
+		int logit1error =0;
+		for(int i = 0; i<adultIndependentTrainArr.length;i++) {
+			if(adultDependentTrainArr[i]!=logit1.predict(adultIndependentTrainArr[i])) {
+				logit1error++;
+			}
+		}
+		
+		System.out.println("Logistic Regression is  = " + logit1error);
+		
+		
+		/**
+		 * Fitting the Model, using cross Validation
+		 */
+		
+		int k =adultIndependentTrainArr.length;
+		
+		LOOCV loocv = new LOOCV(k);
+		int logisticError =0;
+		
+		for (int i = 0; i < k; i++) {
+            double[][] trainx = Math.slice(adultIndependentTrainArr, loocv.train[i]);
+            int[] trainy = Math.slice(adultDependentTrainArr, loocv.train[i]);
+            
+            LogisticRegression logit = new LogisticRegression(trainx, trainy);
+
+            if (adultDependentTrainArr[loocv.test[i]] != logit.predict(adultIndependentTrainArr[loocv.test[i]]))
+            	logisticError++;
+        }
+		System.out.println("Logistic Regression is  = " + logit1error);
+		System.out.println("Logistic Regression  with LOOCV error is  = " + logisticError);
+        
 
 	}
 
