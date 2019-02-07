@@ -17,14 +17,15 @@ import com.kennycason.kumo.nlp.FrequencyAnalyzer;
 import com.kennycason.kumo.palette.ColorPalette;
 
 import smile.data.parser.ArffParser;
+import smile.math.distance.CorrelationDistance;
+import smile.plot.Heatmap;
 import smile.plot.Palette;
+import smile.stat.hypothesis.CorTest;
 import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.Plot;
-import tech.tablesaw.plotly.api.Heatmap;
-//import tech.tablesaw.plotly.api.Pareto;
 import tech.tablesaw.plotly.api.HorizontalBarPlot;
 import tech.tablesaw.plotly.api.PiePlot;
 import tech.tablesaw.plotly.api.ScatterPlot;
@@ -32,9 +33,7 @@ import tech.tablesaw.plotly.api.TimeSeriesPlot;
 import tech.tablesaw.plotly.components.Figure;
 import tech.tablesaw.plotly.traces.HeatmapTrace;
 import tech.tablesaw.util.DoubleArrays;
-
 import static tech.tablesaw.aggregate.AggregateFunctions.*;
-import java.lang.*;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -103,6 +102,17 @@ public class DataDistribution {
 		}
 		
 	}
+	/**
+	 * Correlation
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public static double getCorrelation(double[] x, double[] y) {
+		CorrelationDistance myCorr = new CorrelationDistance();
+		double corTestAns = 1 -(myCorr.pearson(x, y));
+		return corTestAns;		
+	}	
 	
 	/**
 	 * Function adopted from KUMO library for creating wordcloud
@@ -166,21 +176,18 @@ public class DataDistribution {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
-/**
- * Section 3.1 :Efficient distribution of the data
- * Getting the mean,max, min and the median
- * Using Split Apply Combine Functions
- * //Reference :http://www.javadoc.io/doc/tech.tablesaw/tablesaw-core/0.23.2
- * Has other functions depending on dataset
- */
+	/**
+	 * Section 3.1 :Efficient distribution of the data
+	 * Getting the mean,max, min and the median
+	 */
 		Table diabetesData  = Table.read().csv("../Diabetes_Data.csv");
 		
 		Table diabetes = diabetesData.structure();
 		System.out.println(diabetes);
 	/**
 	 * Getting the Summaries from the diabetes age
-	 * t.summarize(column, functions...)
 	 */
+		
 	//Retrieving the AGE, BMI  columns to calculate the Mean, Max and Min
 		NumberColumn Age = diabetesData.nCol("AGE");
 		NumberColumn bmi = diabetesData.nCol("BMI");
@@ -201,29 +208,60 @@ public class DataDistribution {
 /**
  * Section 3.2 :Correlation in the data
  * One feature ( Scatter plot) vs another feature
+ * Using Cortest
  * Many features (Heatmap)
  */
 	//Creating the table with the columns that will be used for the scatter plot
-		
 	Table theScatterData =Table.create("theScatterData",Age,bmi);
-	Figure scatterFigure = ScatterPlot.create("Age by BMI ", theScatterData, "Age", "Bmi");
-	Plot.show(scatterFigure);
-		
-//Creating a heatMap of  of the dataset : dropping the sex Column and creating a heatmap
+	Figure scatterFigure = ScatterPlot.create("Age by BMI ",theScatterData,"Age", "BMI");
+	Plot.show(scatterFigure);	
 	
-	Figure theHeatMap = Heatmap.create("Correlation of the different variables ", 
-			diabetesData,"AGE","BMI");
 	
-	Plot.show(theHeatMap);
-	
-//Changing a table to a double [][]
-	
+	/**
+	 * Correlation  coefficient using Smile
+	 */
 	DoubleColumn theAge=(DoubleColumn)diabetesData.nCol("AGE");
 	DoubleColumn theBMI =(DoubleColumn)diabetesData.nCol("BMI");
-	Figure newHeatMap = Heatmap.create("Trial ", diabetesData,"S3", "S4");
-	Plot.show(newHeatMap);
+	DoubleColumn theS3 =(DoubleColumn)diabetesData.nCol("S3");
+	System.out.println("We are here");
+	System.out.println(getCorrelation(theS3.asDoubleArray(),theBMI.asDoubleArray()));
 	
-//Solution Moving Forward (Converting a Table to double [][]);	
+	
+	/**
+	 * Creating Heatmap with Smile
+	 * S1,S2,S3
+	 */
+	DoubleColumn theS1=(DoubleColumn)diabetesData.nCol("S1");
+	DoubleColumn theS2 =(DoubleColumn)diabetesData.nCol("S2");
+	DoubleColumn theS32 =(DoubleColumn)diabetesData.nCol("S3");
+	
+	Table heatMapTable = Table.create("heatMapTable", theS1, theS2, theS32);
+	
+	System.out.println("Plotting the Heatmap");
+	double [][] heatMapTableArr = heatMapTable.as().doubleMatrix();
+	System.out.println(Heatmap.plot(heatMapTableArr));
+	
+	System.out.println("Plotting the Heatmap");
+//	Heatmap diabetesHeatmap = new Heatmap(heatMapTableArr);
+//	diabetesHeatmap.plot(heatMapTableArr);
+
+	
+	
+//	
+//	//Creating a heatMap of  of the dataset : dropping the sex Column and creating a heatmap
+//	Figure theHeatMap = Heatmap.create("Correlation of the different variables ", 
+//			diabetesData,"AGE","BMI");
+//	
+//	Plot.show(theHeatMap);
+//	
+//	//Changing a table to a double [][]
+//	
+//	Figure newHeatMap = Heatmap.create("Trial ", diabetesData,"S3", "S4");
+//	Plot.show(newHeatMap);
+		
+
+	
+	//Solution Moving Forward (Converting a Table to double [][]);	
 	
 	double [] onearray = new double[10];
 	double [] twoarray = new double[10];
@@ -277,6 +315,7 @@ System.out.println(mySmileScatter);
 
 //smile.plot.ScatterPlot.plot(transposedDiabetesData,myLabels);
 //: Window;
+
 
 		
 /**
