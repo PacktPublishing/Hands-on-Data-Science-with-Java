@@ -18,7 +18,7 @@ import com.kennycason.kumo.palette.ColorPalette;
 
 import smile.data.parser.ArffParser;
 import smile.math.distance.CorrelationDistance;
-import smile.plot.Heatmap;
+//import smile.plot.Heatmap;
 import smile.plot.Palette;
 import smile.stat.hypothesis.CorTest;
 import tech.tablesaw.api.DoubleColumn;
@@ -26,6 +26,7 @@ import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.Plot;
+import tech.tablesaw.plotly.api.Heatmap;
 import tech.tablesaw.plotly.api.HorizontalBarPlot;
 import tech.tablesaw.plotly.api.PiePlot;
 import tech.tablesaw.plotly.api.ScatterPlot;
@@ -231,44 +232,27 @@ public class DataDistribution {
 	 * Creating Heatmap with Smile
 	 * S1,S2,S3
 	 */
-	DoubleColumn theS1=(DoubleColumn)diabetesData.nCol("S1");
-	DoubleColumn theS2 =(DoubleColumn)diabetesData.nCol("S2");
-	DoubleColumn theS32 =(DoubleColumn)diabetesData.nCol("S3");
-	
-	Table heatMapTable = Table.create("heatMapTable", theS1, theS2, theS32);
-	
-	System.out.println("Plotting the Heatmap");
-	double [][] heatMapTableArr = heatMapTable.as().doubleMatrix();
-	System.out.println(Heatmap.plot(heatMapTableArr));
-	
-	System.out.println("Plotting the Heatmap");
-//	Heatmap diabetesHeatmap = new Heatmap(heatMapTableArr);
-//	diabetesHeatmap.plot(heatMapTableArr);
-
-	
-	
+//	DoubleColumn theS1=(DoubleColumn)diabetesData.nCol("S1");
+//	DoubleColumn theS2 =(DoubleColumn)diabetesData.nCol("S2");
+//	DoubleColumn theS32 =(DoubleColumn)diabetesData.nCol("S3");
 //	
-//	//Creating a heatMap of  of the dataset : dropping the sex Column and creating a heatmap
-//	Figure theHeatMap = Heatmap.create("Correlation of the different variables ", 
-//			diabetesData,"AGE","BMI");
+//	Table heatMapTable = Table.create("heatMapTable", theS1, theS2, theS32);
 //	
-//	Plot.show(theHeatMap);
+//	System.out.println("Plotting the Heatmap");
+//	double [][] heatMapTableArr = heatMapTable.as().doubleMatrix();
+//	System.out.println(Heatmap.plot(heatMapTableArr));
 //	
-//	//Changing a table to a double [][]
-//	
-//	Figure newHeatMap = Heatmap.create("Trial ", diabetesData,"S3", "S4");
-//	Plot.show(newHeatMap);
+//	System.out.println("Plotting the Heatmap");
+////	Heatmap diabetesHeatmap = new Heatmap(heatMapTableArr);
+////	diabetesHeatmap.plot(heatMapTableArr);
+	
+	//Creating a heatMap of  of the dataset : dropping the sex Column and creating a heatmap
+	Figure theHeatMap = Heatmap.create("Correlation using Heatmap for AGE and BMI", 
+			diabetesData,"AGE","BMI");
+	Plot.show(theHeatMap);
+	Figure newHeatMap = Heatmap.create("Correlation using Heatmap for S3 and S4 ", diabetesData,"S3", "S4");
+	Plot.show(newHeatMap);
 		
-
-	
-	//Solution Moving Forward (Converting a Table to double [][]);	
-	
-	double [] onearray = new double[10];
-	double [] twoarray = new double[10];
-	
-	//double [][] mycombinedArray = new double[100][10];
-	//mycombinedArray.
-	
 	// Step 1
 	double [][] mycombinedDiabetes = DoubleArrays.to2dArray(diabetesData.numberColumns());
 	HeatChart map = new HeatChart(mycombinedDiabetes);
@@ -281,42 +265,6 @@ public class DataDistribution {
 	//Step 3: Output the chart to a file.
 	map.saveToFile(new File("diabetes-heat-chart.png"));
 
-//Converting a table to double dimensional array:
-	double [][] mynewTable =diabetesData.as().doubleMatrix();
-	
-//Creating a HeatMap with Smile
-
-System.out.println("We are here");
-double[][] transposedDiabetesData = transpose(mycombinedDiabetes);
-
-smile.plot.Heatmap test = new smile.plot.Heatmap(mycombinedDiabetes);
-smile.plot.Heatmap.plot(mycombinedDiabetes);
-System.out.println("We  are done with wmile");
-
-smile.plot.Heatmap.plot(mycombinedDiabetes, Palette.jet(256));
-
-
-//Creating a scatter plot instead!
-
-String [] myLabels = {"AGE", "SEX","BMI","BP","S1","S2","S3","S4","S5","S6","Y"};
-
-
-//smile.plot.ScatterPlot  mySmileScatter = new smile.plot.ScatterPlot(mycombinedDiabetes,myLabels);
-System.out.println(mynewTable.length);
-System.out.println( myLabels.length);
-//
-
-//double[][] transposedDiabetesData = transpose(mycombinedDiabetes);
-System.out.println(transposedDiabetesData.length);
-
-smile.plot.ScatterPlot  mySmileScatter = new smile.plot.ScatterPlot(transposedDiabetesData,myLabels);
-System.out.println(mySmileScatter);
-//plot(data: Array[Array[Double]], labels: Array[String]): Window
-
-//smile.plot.ScatterPlot.plot(transposedDiabetesData,myLabels);
-//: Window;
-
-
 		
 /**
  *  Section 3.3 :Trend Analysis for Feature
@@ -328,7 +276,8 @@ Table bitprice = bitconPriceData.structure();
 System.out.println(bitprice);
 
 //Time series data trend Analysis
-Plot.show(TimeSeriesPlot.create("Bitcoin Exchange Prices in USD", bitconPriceData, "Date", "High"));
+Plot.show(TimeSeriesPlot.create("Trend analysis for Bitcoin Exchange Prices in USD", bitconPriceData, "Date", "Prices"));
+
 
 /**
  * Section 3.4 : Visualizing different data forms
@@ -339,8 +288,7 @@ Plot.show(TimeSeriesPlot.create("Bitcoin Exchange Prices in USD", bitconPriceDat
 //Creating Bar Charts
 	
 Table ageAverage = diabetesData.summarize("AGE", mean).by("SEX");
-Plot.show(
-    HorizontalBarPlot.create(
+Plot.show(HorizontalBarPlot.create(
                 " Average Age by SEX",		// plot title
                 ageAverage,				// Calculated averages of the aGE
                 "SEX",					// grouping column name
@@ -348,17 +296,15 @@ Plot.show(
 
 //Showcase AVG BMI by Age
 Table bmiAverage = diabetesData.summarize("BMI", mean).by("AGE");
-Plot.show(
-    HorizontalBarPlot.create(
+Plot.show( HorizontalBarPlot.create(
                 " Average BMI by AGE",		// plot title
-                bmiAverage,				// Calculated averages of the aGE
-                "AGE",					// grouping column name
+                bmiAverage,				// Calculated averages of the AGE
+                "AGE",					
                 "mean [BMI]"));	
 
 
 //Using Pie Chart to showcase average age by SEX
-Plot.show(
-	    PiePlot.create("Average Age by SEX", ageAverage, "SEX", "mean [AGE]")); 
+Plot.show(PiePlot.create("Average Age by SEX", ageAverage, "SEX", "mean [AGE]")); 
 
 
 /*
