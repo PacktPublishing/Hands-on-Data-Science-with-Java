@@ -286,7 +286,7 @@ Plot.show(TimeSeriesPlot.create("Trend analysis for Bitcoin Exchange Prices in U
  */
 		
 //Creating Bar Charts
-	
+
 Table ageAverage = diabetesData.summarize("AGE", mean).by("SEX");
 Plot.show(HorizontalBarPlot.create(
                 " Average Age by SEX",		// plot title
