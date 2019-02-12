@@ -313,7 +313,7 @@ Plot.show(PiePlot.create("Average Age by SEX", ageAverage, "SEX", "mean [AGE]"))
  */
 
 // Loading a new Set of data
-Table kamitiData  = Table.read().csv("../KAMITI.csv");
+Table kamitiData  = Table.read().csv("DataSets/KAMITI.csv");
 Table kamiti = kamitiData.structure();
 System.out.println(kamiti);
 
