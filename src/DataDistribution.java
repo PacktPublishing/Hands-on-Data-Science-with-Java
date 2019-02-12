@@ -115,6 +115,7 @@ public class DataDistribution {
 		return corTestAns;		
 	}	
 	
+
 	/**
 	 * Function adopted from KUMO library for creating wordcloud
 	 * @param theFileWords( file containing words  for wordcloud to analyze)
@@ -208,7 +209,7 @@ public class DataDistribution {
 		
 /**
  * Section 3.2 :Correlation in the data
- * One feature ( Scatter plot) vs another feature
+ * One feature (Scatter plot) vs another feature
  * Using Cortest
  * Many features (Heatmap)
  */
@@ -224,8 +225,12 @@ public class DataDistribution {
 	DoubleColumn theAge=(DoubleColumn)diabetesData.nCol("AGE");
 	DoubleColumn theBMI =(DoubleColumn)diabetesData.nCol("BMI");
 	DoubleColumn theS3 =(DoubleColumn)diabetesData.nCol("S3");
-	System.out.println("We are here");
-	System.out.println(getCorrelation(theS3.asDoubleArray(),theBMI.asDoubleArray()));
+	DoubleColumn theS22 =(DoubleColumn)diabetesData.nCol("S2");
+	DoubleColumn thesex =(DoubleColumn)diabetesData.nCol("SEX");
+	System.out.println("We are here printing correlation");
+	System.out.println("S3 VS S22" +getCorrelation(theS3.asDoubleArray(),theS22.asDoubleArray()));
+	System.out.println("BMI vs AGE " +getCorrelation(theAge.asDoubleArray(),theBMI.asDoubleArray()));
+	System.out.println("SEX vs BMI " +getCorrelation(thesex.asDoubleArray(),theAge.asDoubleArray()));
 	
 	
 	/**
