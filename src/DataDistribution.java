@@ -181,7 +181,7 @@ public class DataDistribution {
 	 * Section 3.1 :Efficient distribution of the data
 	 * Getting the mean,max, min and the median
 	 */
-		Table diabetesData  = Table.read().csv("../Diabetes_Data.csv");
+		Table diabetesData  = Table.read().csv("DataSets/Diabetes_Data.csv");
 		
 		Table diabetes = diabetesData.structure();
 		System.out.println(diabetes);
@@ -276,7 +276,8 @@ Table bitprice = bitconPriceData.structure();
 System.out.println(bitprice);
 
 //Time series data trend Analysis
-Plot.show(TimeSeriesPlot.create("Trend analysis for Bitcoin Exchange Prices in USD", bitconPriceData, "Date", "Prices"));
+Plot.show(TimeSeriesPlot.
+		create("Trend analysis for Bitcoin Exchange Prices in USD", bitconPriceData, "Date", "High"));
 
 
 /**
