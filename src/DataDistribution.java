@@ -52,25 +52,6 @@ public class DataDistribution {
 	}
 	
 	/**
-	 * A function to transpose a two dimensional array
-	 * @param arr
-	 * @return double [][]
-	 */
-	public static double[][] transpose(double arr[][]){
-	    int m = arr.length;
-	    int n = arr[0].length;
-	    double ret[][] = new double[n][m];
-	
-	    for (int i = 0; i < m; i++) {
-	        for (int j = 0; j < n; j++) {
-	            ret[j][i] = arr[i][j];
-	        }
-	    }
-	
-	    return ret;
-	}
-
-	/**
 	 * A function to write words from String Column from the table to a file .txt
 	 * @param mywords
 	 * @return void
@@ -115,32 +96,6 @@ public class DataDistribution {
 		return corTestAns;		
 	}	
 	
-
-	/**
-	 * Function adopted from KUMO library for creating wordcloud
-	 * @param theFileWords( file containing words  for wordcloud to analyze)
-	 * @param imageToSave(.png)
-	 * @return void
-	 */
-	public static void createWordCloud(String theFileWords){
-		final FrequencyAnalyzer frequencyAnalyzer = new FrequencyAnalyzer();
-		List<WordFrequency> wordFrequencies = null;
-		try {
-			wordFrequencies = frequencyAnalyzer.load(theFileWords);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("File was not found");
-		}
-		final Dimension dimension = new Dimension(300, 300);
-		final WordCloud wordCloud = new WordCloud(dimension, CollisionMode.RECTANGLE);
-		wordCloud.setPadding(0);
-		wordCloud.setBackground(new RectangleBackground(dimension));
-		wordCloud.setColorPalette(new ColorPalette(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE));
-		wordCloud.setFontScalar(new LinearFontScalar(10, 40));
-		wordCloud.build(wordFrequencies);
-		wordCloud.writeToFile("wordcloudToSave1.png");
-	}
 	
 	/**
 	 * A function adopted from KUMO libraly for creating wordCloud
@@ -232,44 +187,6 @@ public class DataDistribution {
 	System.out.println("BMI vs AGE " +getCorrelation(theAge.asDoubleArray(),theBMI.asDoubleArray()));
 	System.out.println("SEX vs BMI " +getCorrelation(thesex.asDoubleArray(),theAge.asDoubleArray()));
 	
-	
-	/**
-	 * Creating Heatmap with Smile
-	 * S1,S2,S3
-	 */
-//	DoubleColumn theS1=(DoubleColumn)diabetesData.nCol("S1");
-//	DoubleColumn theS2 =(DoubleColumn)diabetesData.nCol("S2");
-//	DoubleColumn theS32 =(DoubleColumn)diabetesData.nCol("S3");
-//	
-//	Table heatMapTable = Table.create("heatMapTable", theS1, theS2, theS32);
-//	
-//	System.out.println("Plotting the Heatmap");
-//	double [][] heatMapTableArr = heatMapTable.as().doubleMatrix();
-//	System.out.println(Heatmap.plot(heatMapTableArr));
-//	
-//	System.out.println("Plotting the Heatmap");
-////	Heatmap diabetesHeatmap = new Heatmap(heatMapTableArr);
-////	diabetesHeatmap.plot(heatMapTableArr);
-	
-	//Creating a heatMap of  of the dataset : dropping the sex Column and creating a heatmap
-	Figure theHeatMap = Heatmap.create("Correlation using Heatmap for AGE and BMI", 
-			diabetesData,"AGE","BMI");
-	Plot.show(theHeatMap);
-	Figure newHeatMap = Heatmap.create("Correlation using Heatmap for S3 and S4 ", diabetesData,"S3", "S4");
-	Plot.show(newHeatMap);
-		
-	// Step 1
-	double [][] mycombinedDiabetes = DoubleArrays.to2dArray(diabetesData.numberColumns());
-	HeatChart map = new HeatChart(mycombinedDiabetes);
-	
-	// Step 2: Customizing the Chart
-	map.setTitle("Correlation in diabetes data");
-	map.setXAxisLabel("X Axis");
-	map.setYAxisLabel("Y Axis");
-
-	//Step 3: Output the chart to a file.
-	map.saveToFile(new File("diabetes-heat-chart.png"));
-
 		
 /**
  *  Section 3.3 :Trend Analysis for Feature
@@ -329,8 +246,7 @@ System.out.println(kamiti);
 StringColumn theText = (StringColumn)kamitiData.column("Text");
 writeToMyFile(theText);
 
-
-createWordCloud("wordcloud.txt");
+//Creating the word cloud
 createWordCloud2("wordcloud.txt");
 		
 	}
