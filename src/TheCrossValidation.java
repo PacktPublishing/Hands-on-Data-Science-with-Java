@@ -1,8 +1,12 @@
 import java.io.IOException;
 
+import smile.classification.SVM;
+import smile.math.Math;
+import smile.math.kernel.LinearKernel;
 import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.selection.Selection;
+
 
 /**
  * Section 5
@@ -89,22 +93,42 @@ public class TheCrossValidation {
 		NumberColumn speciesNumk5 = (NumberColumn) speciesNum14.append(speciesNum24).append(speciesNum34);
 		Table flowerIndependentK5 =independentData14.append(independentData24).append(independentData34);
 		
+		
+		
 		/**
-		 * Combining the specific gr
+		 * Testing the model using K1
 		 */
-		System.out.println(speciesNum11.size());
 		
-		//Converting to a double array
+		NumberColumn speciesNumK2toK5 = (NumberColumn) speciesNumk2.append(speciesNumk3).append(speciesNumk4).append(speciesNumk5);
+		Table flowerIndependentK2toK5 = flowerIndependentK2.append(flowerIndependentK3).append(flowerIndependentK4).append(flowerIndependentK5);
 		
-		double [][] indepen = independentData10.as().doubleMatrix();
-		double [][] indepen1 = independentData11.as().doubleMatrix();
+		//Converting to Array
+		int [] speciesNumK2toK5Arr = speciesNumK2toK5.asIntArray();
+		double [][] flowerIndependentK2toK5Arr = flowerIndependentK2toK5.as().doubleMatrix();
 		
-		System.out.println(indepen[indepen.length-1][0]);
-		System.out.println(indepen1[0][0]);
-
-		
-		
-		
+		//Testing set
+		int [] speciesNumk1Arr = speciesNumk1.asIntArray();
+		double [][] flowerIndependentK1Arr = flowerIndependentK1.as().doubleMatrix();
+			
+		/**
+		 * Fitting the model
+		 */
+			System.out.println("Fitting the model, testing with K1 dataset");
+			SVM<double[]> FlowerSvm = new SVM<>(new LinearKernel(), 10.0, Math.max(speciesNumK2toK5Arr) + 1, SVM.Multiclass.ONE_VS_ALL);
+			FlowerSvm.learn(flowerIndependentK2toK5Arr, speciesNumK2toK5Arr);
+			FlowerSvm.finish();
+			
+	   /**
+	    * Testing using K1
+	    */
+	         int K1error = 0;
+	         for (int i = 0; i < flowerIndependentK1Arr.length; i++) {
+	             if (FlowerSvm.predict(flowerIndependentK1Arr[i]) != speciesNumk1Arr[i]) {
+	            	 K1error++;
+	             }
+	         }
+	         
+	         System.out.println(K1error);
 
 	}
 
