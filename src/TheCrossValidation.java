@@ -102,9 +102,10 @@ public class TheCrossValidation {
 		NumberColumn speciesNumK2toK5 = (NumberColumn) speciesNumk2.append(speciesNumk3).append(speciesNumk4).append(speciesNumk5);
 		Table flowerIndependentK2toK5 = flowerIndependentK2.append(flowerIndependentK3).append(flowerIndependentK4).append(flowerIndependentK5);
 		
-		//Converting to Array
+		//Converting to Array 
 		int [] speciesNumK2toK5Arr = speciesNumK2toK5.asIntArray();
 		double [][] flowerIndependentK2toK5Arr = flowerIndependentK2toK5.as().doubleMatrix();
+		//int [] speciesNumK2toK5ArrShuffle = speciesNumK2toK5Arr
 		
 		//Testing set
 		int [] speciesNumk1Arr = speciesNumk1.asIntArray();
