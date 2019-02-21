@@ -34,13 +34,24 @@ public class TheCrossValidation {
 		return arrayToShuffle;
 	}
 	
-	
+	/**
+	 * A function to split the last column of a two D array
+	 * @param arrayToSplitFrom
+	 * @return
+	 */
 	public static int [] getLastColumn (double [][] arrayToSplitFrom) {
 		int [] lastColumn = new int[arrayToSplitFrom.length];
 		
-		
-		
-		
+		for(int i =0; i<arrayToSplitFrom.length;i++) {
+			for(int j =0; j<arrayToSplitFrom[i].length;i++) {
+				
+				if(j+1==arrayToSplitFrom[i].length) {
+					lastColumn[i]=(int) arrayToSplitFrom[i][j];
+					arrayToSplitFrom[i][j]=0;
+				}
+			}
+		}	
+			
 		return lastColumn;
 		
 	}
@@ -137,7 +148,7 @@ public class TheCrossValidation {
 		double [][] combinedShuffle =shuffle2DArray( stillCombined);
 		
 		//Split double dimensional Array
-		// int [] speciesNumK2toK5Ar =combinedShuffle.
+		int [] speciesNumK2toK5Ar =getLastColumn(combinedShuffle);
 		
 		
 		//Converting to Array 
