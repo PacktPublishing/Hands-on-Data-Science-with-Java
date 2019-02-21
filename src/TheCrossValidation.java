@@ -43,7 +43,7 @@ public class TheCrossValidation {
 		int [] lastColumn = new int[arrayToSplitFrom.length];
 		
 		for(int i =0; i<arrayToSplitFrom.length;i++) {
-			for(int j =0; j<arrayToSplitFrom[i].length;i++) {
+			for(int j =0; j<arrayToSplitFrom[i].length;j++) {
 				
 				if(j+1==arrayToSplitFrom[i].length) {
 					lastColumn[i]=(int) arrayToSplitFrom[i][j];
@@ -52,8 +52,7 @@ public class TheCrossValidation {
 			}
 		}	
 			
-		return lastColumn;
-		
+		return lastColumn;		
 	}
 
 
@@ -149,38 +148,56 @@ public class TheCrossValidation {
 		
 		//Split double dimensional Array
 		int [] speciesNumK2toK5Ar =getLastColumn(combinedShuffle);
+		System.out.println(speciesNumK2toK5Ar.length);
+		
+		 for(int i =0; i< combinedShuffle.length;i++) {
+        	 for(int j=0; j<combinedShuffle[i].length; j++){
+        		 System.out.println(combinedShuffle[i][j]);	        		 
+        	 }
+        	 if(i==1) {
+        		 break;
+        	 }
+        		 
+         }
 		
 		
-		//Converting to Array 
-		int [] speciesNumK2toK5Arr = speciesNumK2toK5.asIntArray();
-		double [][] flowerIndependentK2toK5Arr = flowerIndependentK2toK5.as().doubleMatrix();
 		
 		
-		
-		
-		//Testing set
-		int [] speciesNumk1Arr = speciesNumk1.asIntArray();
-		double [][] flowerIndependentK1Arr = flowerIndependentK1.as().doubleMatrix();
-			
-		/**
-		 * Fitting the model
-		 */
-			System.out.println("Fitting the model, testing with K1 dataset");
-			SVM<double[]> FlowerSvm = new SVM<>(new LinearKernel(), 10.0, Math.max(speciesNumK2toK5Arr) + 1, SVM.Multiclass.ONE_VS_ALL);
-			FlowerSvm.learn(flowerIndependentK2toK5Arr, speciesNumK2toK5Arr);
-			FlowerSvm.finish();
-			
-	   /**
-	    * Testing using K1
-	    */
-	         int K1error = 0;
-	         for (int i = 0; i < flowerIndependentK1Arr.length; i++) {
-	             if (FlowerSvm.predict(flowerIndependentK1Arr[i]) != speciesNumk1Arr[i]) {
-	            	 K1error++;
-	             }
-	         }
+//		
+//		//Converting to Array 
+//		int [] speciesNumK2toK5Arr = speciesNumK2toK5.asIntArray();
+//		double [][] flowerIndependentK2toK5Arr = flowerIndependentK2toK5.as().doubleMatrix();
+//		
+//		
+//		
+//		
+//		//Testing set
+//		int [] speciesNumk1Arr = speciesNumk1.asIntArray();
+//		double [][] flowerIndependentK1Arr = flowerIndependentK1.as().doubleMatrix();
+//			
+//		/**
+//		 * Fitting the model
+//		 */
+//			System.out.println("Fitting the model, testing with K1 dataset");
+//			SVM<double[]> FlowerSvm = new SVM<>(new LinearKernel(), 10.0, Math.max(speciesNumK2toK5Arr) + 1, SVM.Multiclass.ONE_VS_ALL);
+//			FlowerSvm.learn(flowerIndependentK2toK5Arr, speciesNumK2toK5Arr);
+//			FlowerSvm.finish();
+//			
+//	   /**
+//	    * Testing using K1
+//	    */
+//	         int K1error = 0;
+//	         for (int i = 0; i < flowerIndependentK1Arr.length; i++) {
+//	             if (FlowerSvm.predict(flowerIndependentK1Arr[i]) != speciesNumk1Arr[i]) {
+//	            	 K1error++;
+//	             }
+//	         }
+//	         
+//	         System.out.println(K1error);
 	         
-	         System.out.println(K1error);
+	         
+	         
+	         
 	         
 	         
 	     //Testing the shuffling
