@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import smile.classification.SVM;
 import smile.math.Math;
@@ -16,6 +18,32 @@ import tech.tablesaw.selection.Selection;
  */
 public class TheCrossValidation {
 	
+	/**
+	 * A function to shuffle an array
+	 * @param arrayToShuffle
+	 * @return
+	 */
+	
+	public static double [][] shuffle2DArray(double [][] arrayToShuffle){
+			for(int j =0 ; j<arrayToShuffle.length;j++) {
+			int ar1 =(int)(Math.random()* arrayToShuffle.length);
+			double [] temp =arrayToShuffle[j];
+			arrayToShuffle[j] =arrayToShuffle[ar1];
+			arrayToShuffle[ar1] =temp;	
+		}		
+		return arrayToShuffle;
+	}
+	
+	
+	public static int [] getLastColumn (double [][] arrayToSplitFrom) {
+		int [] lastColumn = new int[arrayToSplitFrom.length];
+		
+		
+		
+		
+		return lastColumn;
+		
+	}
 
 
 	public TheCrossValidation() {
@@ -102,10 +130,22 @@ public class TheCrossValidation {
 		NumberColumn speciesNumK2toK5 = (NumberColumn) speciesNumk2.append(speciesNumk3).append(speciesNumk4).append(speciesNumk5);
 		Table flowerIndependentK2toK5 = flowerIndependentK2.append(flowerIndependentK3).append(flowerIndependentK4).append(flowerIndependentK5);
 		
+		
+		//Combining the Table to shuffle it 
+		Table Combined = flowerIndependentK2toK5.addColumns(speciesNumK2toK5);
+		double [][] stillCombined = Combined.as().doubleMatrix();
+		double [][] combinedShuffle =shuffle2DArray( stillCombined);
+		
+		//Split double dimensional Array
+		// int [] speciesNumK2toK5Ar =combinedShuffle.
+		
+		
 		//Converting to Array 
 		int [] speciesNumK2toK5Arr = speciesNumK2toK5.asIntArray();
 		double [][] flowerIndependentK2toK5Arr = flowerIndependentK2toK5.as().doubleMatrix();
-		//int [] speciesNumK2toK5ArrShuffle = speciesNumK2toK5Arr
+		
+		
+		
 		
 		//Testing set
 		int [] speciesNumk1Arr = speciesNumk1.asIntArray();
@@ -130,6 +170,16 @@ public class TheCrossValidation {
 	         }
 	         
 	         System.out.println(K1error);
+	         
+	         
+	     //Testing the shuffling
+//	         double [][] myArray =shuffle2DArray(flowerIndependentK1Arr);
+//	         for(int i =0; i< myArray.length;i++) {
+//	        	 for(int j=0; j<myArray[i].length; j++){
+//	        		 System.out.println(myArray[i][j]);	        		 
+//	        	 }
+//	        		 
+//	         }
 
 	}
 
