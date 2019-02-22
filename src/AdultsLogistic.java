@@ -11,6 +11,7 @@ import tech.tablesaw.selection.Selection;
 /**
  * Logistic Regression using Adult Dataset
  * @author rwangari
+ * Section 4.3 second Option
  *
  */
 

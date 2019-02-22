@@ -131,7 +131,10 @@ public class IrisFlowersClassification {
       
 		DecimalFormat df = new DecimalFormat("###.##");
        System.out.println("The accuracy for the linear SVM model is"+df.format(linearAccuracy));
-       System.out.println("The accuracy for the Gaussian SVM model is"+df.format(gaussianAccuracy));     
+       System.out.println("The accuracy for the Gaussian SVM model is"+df.format(gaussianAccuracy));   
+       
+       
+
             
 		
 	}
