@@ -11,6 +11,7 @@ import smile.plot.Palette;
 import smile.plot.PlotCanvas;
 import smile.plot.ScatterPlot;
 import smile.validation.AdjustedRandIndex;
+import smile.validation.RandIndex;
 import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.selection.Selection;
@@ -87,31 +88,25 @@ public class CustomerClustering {
 		 * Plotting the dataset
 		 */
 		
-		System.out.println("We are plotting heatmap");
-		PlotCanvas canvas = Heatmap.plot(customerSegmentationTrain_Arr, Palette.jet(256));
-		System.out.println("We are done plotting");
-		
 		ScatterPlot myScatter = new ScatterPlot(customerSegmentationTrain_Arr);
 		System.out.println(myScatter);
 		
 		/**
 		 * Fitting the KMeans Model
 		 */
-		 KMeans kmeans = new KMeans(customerSegmentationTrain_Arr,4, 100, 20);	
+		 KMeans kmeans = new KMeans(customerSegmentationTrain_Arr,3, 100, 20);	
 		 System.out.println(kmeans);
-		 //Plotting the dataset
-		 
-		 
+
+	 
 		/**
 		 * Testing our K means Model
 		 */
 		 
 		 double [] theX = {10290,1981,2232,1038,168,2125};
-		 System.out.println("we printing shit"+ kmeans.predict(theX));
+		 System.out.println("we are predicting"+ kmeans.predict(theX));
 		 System.out.println("we printing " +kmeans.getClusterLabel()[8]);
 		 System.out.println("we printing " +kmeans.getClusterSize()[1]);
-		 System.out.println("we printing "+kmeans.centroids()[0][0]);
-		// System.out.println("we printing "+kmeans.lloyd(customerSegmentationTrain_Arr, 4,100, 4));
+		 System.out.println("we printing "+kmeans.centroids()[0][1]);
 
 
   
