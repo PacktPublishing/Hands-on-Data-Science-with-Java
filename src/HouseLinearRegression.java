@@ -57,9 +57,7 @@ public class HouseLinearRegression {
 		double [] theAbsoluteError  = new double [actualValues.length];
 		
 		for(int k = 0; k<actualValues.length; k++) {
-			
 			double j =actualValues[k]-predictedValues[k];
-			
 			//putting the absolute error in the array			
 			theAbsoluteError[k]=Math.abs(j);		
 		}
@@ -103,17 +101,16 @@ public class HouseLinearRegression {
 	System.out.println("We are done here");
 	
 	//Getting the structure of the table:
-		System.out.println("We hear printing the structure");
-		Table tableStructure= myNewTableHousePrices.structure();
-		System.out.println(tableStructure);	
-		System.out.println("We are done here");
+	System.out.println("We hear printing the structure");
+	Table tableStructure= myNewTableHousePrices.structure();
+	System.out.println(tableStructure);	
+	System.out.println("We are done here");
 	
 	
 	//Splitting the table into two (Independent vs Dependent)
 	NumberColumn AllPricesHouseDependent = myNewTableHousePrices.numberColumn(20);
 	Table AllPricesHouseIndependent = (Table)myNewTableHousePrices.removeColumns("SalePrices");
-		
-	
+			
 	
 	//Test and training
 	Table AllPricesHouseTrainIndependent = (Table)AllPricesHouseIndependent.where(Selection.withRange(1,727));
