@@ -110,8 +110,7 @@ public class HouseLinearRegression {
 	//Splitting the table into two (Independent vs Dependent)
 	NumberColumn AllPricesHouseDependent = myNewTableHousePrices.numberColumn(20);
 	Table AllPricesHouseIndependent = (Table)myNewTableHousePrices.removeColumns("SalePrices");
-		
-	
+			
 	
 	//Test and training
 	Table AllPricesHouseTrainIndependent = (Table)AllPricesHouseIndependent.where(Selection.withRange(1,727));
