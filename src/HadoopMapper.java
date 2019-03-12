@@ -1,5 +1,5 @@
-
-public class HadoopMapper {
+import java.util.*; 
+ class HadoopMapper {
 
 	public HadoopMapper() {
 		// TODO Auto-generated constructor stub
