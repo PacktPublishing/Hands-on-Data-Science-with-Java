@@ -3,6 +3,9 @@
   <groupId>Hands-on-Data-Science-with-Java</groupId>
   <artifactId>Hands-on-Data-Science-with-Java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <!--<properties>
+ 	<dl4j.version>0.9.1</dl4j.version>
+  </properties>  -->
   <dependencies>
   <!-- Adding a dependency for Table Saw to help with Analytics -->
   	<dependency>
@@ -75,17 +78,18 @@
 	</dependency>
 	
 <!-- Adding a dependency for DeepLearning4J -->
-
-  <dependency>
+    <dependency>
       <groupId>org.deeplearning4j</groupId>
       <artifactId>deeplearning4j-core</artifactId>
       <version>1.0.0-beta3</version>
   </dependency>
+  
   <dependency>
       <groupId>org.nd4j</groupId>
       <artifactId>nd4j-native-platform</artifactId>
       <version>1.0.0-beta3</version>
   </dependency>
+
 </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
