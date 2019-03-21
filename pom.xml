@@ -83,13 +83,29 @@
       <artifactId>deeplearning4j-core</artifactId>
       <version>1.0.0-beta3</version>
   </dependency>
+  <dependency>
+      <groupId>org.deeplearning4j</groupId>
+      <artifactId>deeplearning4j-nlp</artifactId>
+      <version>1.0.0-beta3</version>
+  </dependency>
+  <dependency>
+      <groupId>org.deeplearning4j</groupId>
+      <artifactId>deeplearning4j-zoo</artifactId>
+      <version>1.0.0-beta3</version>
+  </dependency>
   
   <dependency>
       <groupId>org.nd4j</groupId>
       <artifactId>nd4j-native-platform</artifactId>
       <version>1.0.0-beta3</version>
   </dependency>
-
+  
+  <!-- Next 2: used for MapFileConversion Example. Note you need *both* together -->
+  <dependency>
+      <groupId>org.datavec</groupId>
+      <artifactId>datavec-hadoop</artifactId>
+      <version>1.0.0-beta3</version>
+  </dependency>
 </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
