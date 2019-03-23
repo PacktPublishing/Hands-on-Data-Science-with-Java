@@ -3,9 +3,6 @@
   <groupId>Hands-on-Data-Science-with-Java</groupId>
   <artifactId>Hands-on-Data-Science-with-Java</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <!--<properties>
- 	<dl4j.version>0.9.1</dl4j.version>
-  </properties>  -->
   <dependencies>
   <!-- Adding a dependency for Table Saw to help with Analytics -->
   	<dependency>
@@ -77,33 +74,69 @@
 	    <version>1.17</version>
 	</dependency>
 	
-<!-- Adding a dependency for DeepLearning4J -->
-    <dependency>
-      <groupId>org.deeplearning4j</groupId>
-      <artifactId>deeplearning4j-core</artifactId>
-      <version>1.0.0-beta3</version>
-  </dependency>
-  <dependency>
-      <groupId>org.deeplearning4j</groupId>
-      <artifactId>deeplearning4j-nlp</artifactId>
-      <version>1.0.0-beta3</version>
-  </dependency>
-  <dependency>
-      <groupId>org.deeplearning4j</groupId>
-      <artifactId>deeplearning4j-zoo</artifactId>
-      <version>1.0.0-beta3</version>
-  </dependency>
+<!-- Adding a dependency for DeepLearning4J functionality -->
+	  <dependency>
+	      <groupId>org.deeplearning4j</groupId>
+	      <artifactId>deeplearning4j-core</artifactId>
+	      <version>1.0.0-beta3</version>
+	  </dependency>
+	  <dependency>
+	      <groupId>org.deeplearning4j</groupId>
+	      <artifactId>deeplearning4j-nlp</artifactId>
+	      <version>1.0.0-beta3</version>
+	  </dependency>
+	  <dependency>
+	      <groupId>org.deeplearning4j</groupId>
+	      <artifactId>deeplearning4j-zoo</artifactId>
+	      <version>1.0.0-beta3</version>
+	  </dependency> 
+	   <!-- ParallelWrapper & ParallelInference live here -->
+	 <dependency>
+	     <groupId>org.deeplearning4j</groupId>
+	     <artifactId>deeplearning4j-parallel-wrapper</artifactId>
+	     <version>1.0.0-beta3</version>
+	 </dependency>
+
   
+  <!-- ND4J -->  
   <dependency>
       <groupId>org.nd4j</groupId>
       <artifactId>nd4j-native-platform</artifactId>
       <version>1.0.0-beta3</version>
   </dependency>
   
-  <!-- Next 2: used for MapFileConversion Example. Note you need *both* together -->
+  <!-- Next 2: used for MapFileConversion Example. Note you need *both* together 
+  Datavec Dependencies-->
   <dependency>
       <groupId>org.datavec</groupId>
       <artifactId>datavec-hadoop</artifactId>
+      <version>1.0.0-beta3</version>
+  </dependency>
+  <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>3.1.1</version>
+      <exclusions>
+          <exclusion>
+              <groupId>jdk.tools</groupId>
+              <artifactId>jdk.tools</artifactId>
+          </exclusion>
+          <exclusion>
+              <groupId>log4j</groupId>
+              <artifactId>log4j</artifactId>
+          </exclusion>
+          <exclusion>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-log4j12</artifactId>
+          </exclusion>
+      </exclusions>
+  </dependency>
+  
+  
+    <!-- Arbiter - used for hyperparameter optimization (grid/random search) -->
+  <dependency>
+      <groupId>org.deeplearning4j</groupId>
+      <artifactId>arbiter-deeplearning4j</artifactId>
       <version>1.0.0-beta3</version>
   </dependency>
 </dependencies>

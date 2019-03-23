@@ -4,9 +4,14 @@ import java.io.IOException;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
+import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
+import org.deeplearning4j.nn.weights.WeightInit;
+import org.nd4j.linalg.dataset.DataSet;
+import org.nd4j.linalg.dataset.SplitTestAndTrain;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
+import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
+import org.nd4j.linalg.dataset.api.preprocessor.NormalizerStandardize;
 import org.nd4j.linalg.io.ClassPathResource;
-//import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 /**
  * Section 5 
  * Creating a deeplearning Model using DeePLearnign 4J
@@ -49,9 +54,39 @@ public class DeepLearningTest {
    *  Using RecordReaderDataSetIterator to handle conversion  of our dataset to objects,
    *  ready for use in neural network
    */ 
-        DataSetIterator iterator = new RecordReaderDataSetIterator(irisRecordReader,flowerBatchSize,numExplanatoryVariables,numFlowerClasses);
-       // DataSet allData = iterator.next();
-       // allData.shuffle();
+        DataSetIterator irisIterator = new RecordReaderDataSetIterator(irisRecordReader,flowerBatchSize,numExplanatoryVariables,numFlowerClasses);
+        DataSet irisFlowerAllData = irisIterator.next();
+        irisFlowerAllData.shuffle();
+        
+        
+   /**
+    * Splitting our dataset to training and Testing
+    * We will use 70:30 split
+    */
+        SplitTestAndTrain flowerDataTestTrain = irisFlowerAllData.splitTestAndTrain(0.7);
+        DataSet irisTrainingData = flowerDataTestTrain.getTrain();
+        DataSet irisTestData = flowerDataTestTrain.getTest();
+       
+    /**
+     * We need to normalize our data. We'll use NormalizeStandardize (which gives us mean 0, unit variance):
+     */
+        DataNormalization flowerNormalizer = new NormalizerStandardize();
+        flowerNormalizer.fit(irisTrainingData);           //Collect the statistics (mean/stdev) from the training data. This does not modify the input data
+        flowerNormalizer.transform(irisTrainingData);     //Apply normalization to the training data
+        flowerNormalizer.transform(irisTestData);
+        
+        final int numInputs = 4;
+        int outputNum = 3;
+        long seed = 6;
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 	}
 
