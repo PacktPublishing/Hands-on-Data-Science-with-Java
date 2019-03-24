@@ -78,39 +78,44 @@
 	  <dependency>
 	      <groupId>org.deeplearning4j</groupId>
 	      <artifactId>deeplearning4j-core</artifactId>
-	      <version>1.0.0-beta3</version>
+	      <version>1.0.0-beta2</version>
 	  </dependency>
 	  <dependency>
 	      <groupId>org.deeplearning4j</groupId>
 	      <artifactId>deeplearning4j-nlp</artifactId>
-	      <version>1.0.0-beta3</version>
+	      <version>1.0.0-beta2</version>
 	  </dependency>
 	  <dependency>
 	      <groupId>org.deeplearning4j</groupId>
 	      <artifactId>deeplearning4j-zoo</artifactId>
-	      <version>1.0.0-beta3</version>
+	      <version>1.0.0-beta2</version>
 	  </dependency> 
-	   <!-- ParallelWrapper & ParallelInference live here -->
+	   <!-- ParallelWrapper & ParallelInference live here
 	 <dependency>
 	     <groupId>org.deeplearning4j</groupId>
 	     <artifactId>deeplearning4j-parallel-wrapper</artifactId>
 	     <version>1.0.0-beta3</version>
-	 </dependency>
+	 </dependency> -->
 
   
   <!-- ND4J -->  
   <dependency>
       <groupId>org.nd4j</groupId>
       <artifactId>nd4j-native-platform</artifactId>
-      <version>1.0.0-beta3</version>
+      <version>1.0.0-beta2</version>
   </dependency>
+  <!--<dependency>
+    <groupId>org.nd4j</groupId>
+    <artifactId>nd4j-cuda-9.0-platform</artifactId>
+    <version>1.0.0-beta2</version>
+ </dependency>-->
   
   <!-- Next 2: used for MapFileConversion Example. Note you need *both* together 
   Datavec Dependencies-->
   <dependency>
       <groupId>org.datavec</groupId>
       <artifactId>datavec-hadoop</artifactId>
-      <version>1.0.0-beta3</version>
+      <version>1.0.0-beta2</version>
   </dependency>
   <dependency>
       <groupId>org.apache.hadoop</groupId>
@@ -137,7 +142,7 @@
   <dependency>
       <groupId>org.deeplearning4j</groupId>
       <artifactId>arbiter-deeplearning4j</artifactId>
-      <version>1.0.0-beta3</version>
+      <version>1.0.0-beta2</version>
   </dependency>
 </dependencies>
   <build>
