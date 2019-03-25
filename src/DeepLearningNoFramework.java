@@ -146,18 +146,39 @@ public class DeepLearningNoFramework {
 	   * A matrix to generate the hot encodings for the labels in the previous function
 	   * @return
 	   */
-//	  public static int[][] labelHotEncodings(){		  
-//		  int[][] hotEncodingsArray = new int[1500][3];
-//		  for(int i = 0; i<; i++) {
-//			  labelArray[i]=2;  
-//		  }
-//		  
-//		  
-//		  
-//		  
-//		return null;
-//		  
-//	  }
+	  public static int[][] labelHotEncodings(){		  
+		  int[][] hotEncodingsArray = new int[1500][3];
+		  for(int i = 0; i<500; i++) {
+			  for(int j =0;j<3; j++) {
+				  if(j==0) {
+					  hotEncodingsArray[i][j] =1;
+				  }else {
+					  hotEncodingsArray[i][j]=0;
+				  } 
+			  }
+		  }
+			  
+		  for(int i = 500; i<1000; i++) {
+			  for(int j =0;j<3; j++) {
+				  if(j==1) {
+					  hotEncodingsArray[i][j] =1;
+				  }else {
+					  hotEncodingsArray[i][j]=0;
+				  } 
+			  }
+		  }
+		  for(int i =1000; i<1500; i++) {
+			  for(int j =0;j<3; j++) {
+				  if(j==2) {
+					  hotEncodingsArray[i][j] =1;
+				  }else {
+					  hotEncodingsArray[i][j]=0;
+				  } 
+			  }
+		  }
+		return hotEncodingsArray;
+		  
+	  }
 	
 	
 	
@@ -220,8 +241,16 @@ public class DeepLearningNoFramework {
 	 * Concatinating the 2d arrays to one 2d array of size 500( into one big matrix)
 	 */	      
 	    float [][] X = merge2dArrays(x1,x2,x3);    
-	    
 	
+	/**
+	 * Hot encodings
+	 */
+	    labelHotEncodings();
+
+    /**
+     * Visualizing the data
+     */ 
+	    
 		System.out.println("Processing the deeplearnign with no framework ");
 	}
 
