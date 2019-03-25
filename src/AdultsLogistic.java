@@ -167,15 +167,10 @@ public class AdultsLogistic {
 		
 	//Table Structure
 		Table Structure =  cleanAdultDataset.structure();
-		System.out.println(Structure);
+		System.out.println(Structure);		
 		
 	/**
-	 * Randomizing the dataset before Test Train Split
-	 */
-		
-		
-	/**
-	 * Separating the dataset into independent and dependent Variables
+	 * Separating the dataset into independent and dependent Variablesc
 	 */
 		StringColumn adultDependent = cleanAdultDataset.stringColumn("income");
 		Table adultIndependent = (Table)cleanAdultDataset.removeColumns("income");
@@ -184,12 +179,12 @@ public class AdultsLogistic {
 	 * using 70:30 split
 	 */
 				
-		Table adultIndependentTrain = (Table)adultIndependent.where(Selection.withRange(1,20000));
-		Table adultIndependentTest =  (Table)adultIndependent.where(Selection.withRange(20001,48835));
+		Table adultIndependentTrain = (Table)adultIndependent.where(Selection.withRange(1,30000));
+		Table adultIndependentTest =  (Table)adultIndependent.where(Selection.withRange(30001,48835));
 		
 		//Dependent
-		StringColumn adultDependentTrain = (StringColumn)adultDependent.where(Selection.withRange(1,20000));
-		StringColumn adultDependentTest =  (StringColumn)adultDependent.where(Selection.withRange(20001,48835));
+		StringColumn adultDependentTrain = (StringColumn)adultDependent.where(Selection.withRange(1,30000));
+		StringColumn adultDependentTest =  (StringColumn)adultDependent.where(Selection.withRange(30001,48835));
 		
 		
 		/**
@@ -198,6 +193,13 @@ public class AdultsLogistic {
 		
 		double [][] adultIndependentTrainArr = adultIndependentTrain.as().doubleMatrix();
 		int[]  adultDependentTrainArr =adultDependentTrain.asIntArray();
+		
+		/**
+		 * Changing the train and test from table to double
+		 */
+		
+		double [][] adultIndependentTestArr = adultIndependentTest.as().doubleMatrix();
+		int[]  adultDependentTestArr =adultDependentTest.asIntArray();
 		
 		
 		
@@ -208,35 +210,73 @@ public class AdultsLogistic {
 		LogisticRegression logit1 = new LogisticRegression(adultIndependentTrainArr, adultDependentTrainArr);
 		
 		int logit1error =0;
-		for(int i = 0; i<adultIndependentTrainArr.length;i++) {
-			if(adultDependentTrainArr[i]!=logit1.predict(adultIndependentTrainArr[i])) {
+		for(int i = 0; i<adultIndependentTestArr.length;i++) {
+			if(adultDependentTestArr[i]!=logit1.predict(adultIndependentTestArr[i])) {
 				logit1error++;
 			}
 		}
 		
-		System.out.println("Logistic Regression is  = " + logit1error);
+		System.out.println("Logistic Regression is  = " + logit1error);		
 		
-		
-		/**
-		 * Fitting the Model, using cross Validation
-		 */
-		
-		int k =adultIndependentTrainArr.length;
-		
-		LOOCV loocv = new LOOCV(k);
-		int logisticError =0;
-		
-		for (int i = 0; i < k; i++) {
-            double[][] trainx = Math.slice(adultIndependentTrainArr, loocv.train[i]);
-            int[] trainy = Math.slice(adultDependentTrainArr, loocv.train[i]);
-            
-            LogisticRegression logit = new LogisticRegression(trainx, trainy);
 
-            if (adultDependentTrainArr[loocv.test[i]] != logit.predict(adultIndependentTrainArr[loocv.test[i]]))
-            	logisticError++;
-        }
-		System.out.println("Logistic Regression is  = " + logit1error);
-		System.out.println("Logistic Regression  with LOOCV error is  = " + logisticError);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		/**
+//		 * Fitting the Model, using cross Validation
+//		 */
+//		
+//		int k =adultIndependentTrainArr.length;
+//		
+//		LOOCV loocv = new LOOCV(k);
+//		int logisticError =0;
+//		
+//		for (int i = 0; i < k; i++) {
+//            double[][] trainx = Math.slice(adultIndependentTrainArr, loocv.train[i]);
+//            int[] trainy = Math.slice(adultDependentTrainArr, loocv.train[i]);
+//            
+//            LogisticRegression logit = new LogisticRegression(trainx, trainy);
+//
+//            if (adultDependentTrainArr[loocv.test[i]] != logit.predict(adultIndependentTrainArr[loocv.test[i]]))
+//            	logisticError++;
+//        }
+//		System.out.println("Logistic Regression is  = " + logit1error);
+//		System.out.println("Logistic Regression  with LOOCV error is  = " + logisticError);
         
 
 	}

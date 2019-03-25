@@ -54,28 +54,51 @@ public class IrisFlowersClassification {
 	 */		
 		NumberColumn flowerSpeciesDependent = irisFlowersData.numberColumn(6);
 		Table irisIndependent = (Table)irisFlowersData.removeColumns("Id","Species","SpeciesNum");
+	
 		
+		/**
+		 * Splitting Independent & dependent  dataset to test and Training
+		 */
+			Table irisIndependentTrain = (Table)irisIndependent.where(Selection.withRange(1,100));
+			Table irisIndependentTest =  (Table)irisIndependent.where(Selection.withRange(101,150));
+			NumberColumn flowerSpeciesDependentTrain = (NumberColumn)flowerSpeciesDependent.where(Selection.withRange(1,100));
+			NumberColumn flowerSpeciesDependentTest =  (NumberColumn)flowerSpeciesDependent.where(Selection.withRange(101,150));
+		
+		/**
+		 * Converting the training & testing dataset( independent & dependent) to array	
+		 */
+			double [][] irisIndependentTrainArr =irisIndependentTrain.as().doubleMatrix();
+			int[] flowerSpeciesDependentTrainArr = flowerSpeciesDependentTrain.asIntArray();
+		
+			double [][] irisIndependentTestArr =irisIndependentTest.as().doubleMatrix();
+			int[] flowerSpeciesDependentTestArr = flowerSpeciesDependentTest.asIntArray();
+			
+			//Full dataset
+			 double [][] irisIndependentFull =irisIndependent.as().doubleMatrix();
+			 int [] flowerSpeciesDependentFull = flowerSpeciesDependent.asIntArray();
 		
 	/**
-	 * Splitting Independent & dependent  dataset to test and Training
+	 * Fitting the model,(Support Vector Machine - Using Gaussian Kernel method 
 	 */
-		Table irisIndependentTrain = (Table)irisIndependent.where(Selection.withRange(1,100));
-		Table irisIndependentTest =  (Table)irisIndependent.where(Selection.withRange(101,150));
-		NumberColumn flowerSpeciesDependentTrain = (NumberColumn)flowerSpeciesDependent.where(Selection.withRange(1,100));
-		NumberColumn flowerSpeciesDependentTest =  (NumberColumn)flowerSpeciesDependent.where(Selection.withRange(101,150));
-	
-	/**
-	 * Converting the training & testing dataset( independent & dependent) to array	
-	 */
-		double [][] irisIndependentTrainArr =irisIndependentTrain.as().doubleMatrix();
-		int[] flowerSpeciesDependentTrainArr = flowerSpeciesDependentTrain.asIntArray();
-	
-		double [][] irisIndependentTestArr =irisIndependentTest.as().doubleMatrix();
-		int[] flowerSpeciesDependentTestArr = flowerSpeciesDependentTest.asIntArray();
+         
+         System.out.println("We are testing Gaussian Model");
+ 		 SVM<double[]> theSvm = new SVM<>(new GaussianKernel(1), 1.0, Math.max(flowerSpeciesDependentTrainArr) + 1, SVM.Multiclass.ONE_VS_ALL);
+ 		 theSvm.learn(irisIndependentTrainArr, flowerSpeciesDependentTrainArr);
+ 		 theSvm.learn(irisIndependentTrainArr, flowerSpeciesDependentTrainArr);
+ 		 theSvm.finish();
+ 		 theSvm.trainPlattScaling(irisIndependentTrainArr,flowerSpeciesDependentTrainArr);
+ 		
+ 		//Getting the error
+          
+          int theError = 0;
+          for (int i = 0; i < irisIndependentTestArr.length; i++) {
+              if (theSvm.predict(irisIndependentTestArr[i]) != flowerSpeciesDependentTestArr[i]) {
+            	  theError++;
+              }
+          }
+          
+          System.out.println("Gaussian ONE vs. ALL error = " + theError);
 		
-		//Full dataset
-		 double [][] irisIndependentFull =irisIndependent.as().doubleMatrix();
-		 int [] flowerSpeciesDependentFull = flowerSpeciesDependent.asIntArray();
 		
 	/**
 	 * Fitting the Model (Support Vector Machine - Using Linear method)
@@ -96,30 +119,8 @@ public class IrisFlowersClassification {
          }
          
          System.out.println("Linear ONE vs. ALL error  on testing dataset is = " + error);
-	/**
-	 * Fitting the model,(Support Vector Machine - Using Gaussian Kernel method 
-	 */
-         
-         System.out.println("We are testing Gaussian Model");
- 		 SVM<double[]> theSvm = new SVM<>(new GaussianKernel(1), 1.0, Math.max(flowerSpeciesDependentFull) + 1, SVM.Multiclass.ONE_VS_ALL);
- 		 theSvm.learn(irisIndependentFull, flowerSpeciesDependentFull);
- 		 theSvm.learn(irisIndependentFull, flowerSpeciesDependentFull);
- 		 theSvm.finish();
- 		 theSvm.trainPlattScaling(irisIndependentFull,flowerSpeciesDependentFull);
- 		
- 		//Getting the error
-          
-          int theError = 0;
-          for (int i = 0; i < irisIndependentFull.length; i++) {
-              if (svm.predict(irisIndependentFull[i]) != flowerSpeciesDependentFull[i]) {
-            	  theError++;
-              }
-          }
-          
-          System.out.println("Gaussian ONE vs. ALL error = " + theError);
-         
-         
-     
+
+       
      /**
       * Testing the accuracy of SVM model
       */
