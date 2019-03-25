@@ -2,6 +2,13 @@
 import java.lang.Math.*;
 import java.util.Random;
 
+import tech.tablesaw.api.DoubleColumn;
+import tech.tablesaw.api.NumberColumn;
+import tech.tablesaw.api.Table;
+import tech.tablesaw.plotly.Plot;
+import tech.tablesaw.plotly.api.ScatterPlot;
+import tech.tablesaw.plotly.components.Figure;
+
 public class DeepLearningNoFramework {
 
 	public DeepLearningNoFramework() {
@@ -179,8 +186,19 @@ public class DeepLearningNoFramework {
 		return hotEncodingsArray;
 		  
 	  }
-	
-	
+	/**
+	 * Extracting an array from a 2d Array
+	 * @param X
+	 * @param j
+	 * @return
+	 */
+	public static float[] extractArray(float [][]X,int j) {
+		float[] myNewArray = new float[X.length];
+		for(int i =0; i<X.length;i++) {
+			myNewArray[i]=X[i][j];	
+		}
+		return myNewArray;		
+	}
 	
 	public static void main(String[] args) {
 /**
@@ -248,8 +266,23 @@ public class DeepLearningNoFramework {
 	    labelHotEncodings();
 
     /**
-     * Visualizing the data
+     * Visualizing the data, we will be using Tablesaw
      */ 
+	    float [] myX =extractArray(X,0);
+	    float [] myY = extractArray(X,1);
+	    
+	    //convert to Column
+	    DoubleColumn theX = DoubleColumn.create("X", myX);
+	    DoubleColumn theY = DoubleColumn.create("Y", myY);
+	    Table dataset =Table.create("dataset",theX,theY);
+		Figure scatterFigure = ScatterPlot.create("Dataset Plotted ", dataset, "X", "Y");
+		Plot.show(scatterFigure);
+	    
+	    
+	    
+	    
+	    System.out.println(myX.length);
+
 	    
 		System.out.println("Processing the deeplearnign with no framework ");
 	}
