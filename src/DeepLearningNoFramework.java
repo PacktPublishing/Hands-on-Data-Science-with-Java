@@ -123,8 +123,41 @@ public class DeepLearningNoFramework {
 		}
 		 return merge2dArrays;		
 	}
-	
-	
+	/**
+	 * Created a function to create labels, 0,1,2 for the dataset
+	 * @return
+	 */
+	  public static int[] labels() {
+		  
+		  int[] labelArray = new int[1500];
+		  
+		  for(int i = 0; i<500; i++) {
+			  labelArray[i]=0;  
+		  }
+		  for(int i =500; i<1000; i++) {
+			  labelArray[i]=1;  
+		  }
+		  for(int i = 1000; i<1500; i++) {
+			  labelArray[i]=2;  
+		  }
+		return labelArray; 
+	  }
+	  /**
+	   * A matrix to generate the hot encodings for the labels in the previous function
+	   * @return
+	   */
+//	  public static int[][] labelHotEncodings(){		  
+//		  int[][] hotEncodingsArray = new int[1500][3];
+//		  for(int i = 0; i<; i++) {
+//			  labelArray[i]=2;  
+//		  }
+//		  
+//		  
+//		  
+//		  
+//		return null;
+//		  
+//	  }
 	
 	
 	
