@@ -277,11 +277,16 @@ public class DeepLearningNoFramework {
 	    Table dataset =Table.create("dataset",theX,theY);
 		Figure scatterFigure = ScatterPlot.create("Dataset Plotted ", dataset, "X", "Y");
 		Plot.show(scatterFigure);
+		
+		//Defining structure of dataset
+		int totalSamples = X.length; //1500 samples
+		int features = X[0].length;
+		int hidden_nodes = 5;
+		int classes = 3;
 	    
-	    
-	    
-	    
-	    System.out.println(myX.length);
+/**
+ * Randomly initializing the weights
+ */
 
 	    
 		System.out.println("Processing the deeplearnign with no framework ");
