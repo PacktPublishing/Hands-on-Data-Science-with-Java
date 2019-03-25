@@ -1,5 +1,6 @@
 
 import java.lang.Math.*;
+import java.util.Random;
 
 public class DeepLearningNoFramework {
 
@@ -82,14 +83,111 @@ public class DeepLearningNoFramework {
 		return softmaxExponents;
 	}
 	
+	/**
+	 * Convert two arrays to a two dimensional array
+	 * @param 2 arrays of type float
+	 */	
+	public static float[][] convertTo2D(float [] x1, float[]x2){
+		float[][] newArray = new float[500][2];
+		for (int i=0;i<x1.length;i++){
+			newArray[i][0]=x1[i];
+        }
+        for (int i=0;i<x2.length;i++){
+        	newArray[i][1]=x2[i];
+        }
+		return newArray ;	
+	}
+	
+	
+	/**
+	 * Merging 3 2d Arrays into One 2d array
+	 * @param args
+	 */
+	public static float[][] merge2dArrays (float[][]x1,float[][]x2,float[][]x3){
+		float[][] merge2dArrays	= new float[1500][2];
+		
+		for(int i = 0; i < x1.length;i++) {
+			for (int j = 0; j<x1[j].length; j++) {
+				merge2dArrays[i][j]=x1[i][j];
+			}
+		}
+		for(int i = 500; i <1000;i++) {
+			for (int j = 0; j<x2[j].length; j++) {
+				merge2dArrays[i][j]=x2[i-500][j];
+			}
+		}
+		for(int i = 1000; i <1500;i++) {
+			for (int j = 0; j<x3[j].length; j++) {
+				merge2dArrays[i][j]=x3[i-1000][j];
+			}
+		}
+		 return merge2dArrays;		
+	}
+	
+	
+	
+	
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-//		# generate three Gaussian clouds each holding 500 points
-//		X1 = np.random.randn(500, 2) + np.array([0, -2])
-//		X2 = np.random.randn(500, 2) + np.array([2, 2])
-//		X3 = np.random.randn(500, 2) + np.array([-2, 2])
+/**
+ * generate three Gaussian clouds each holding 500 points
+ */
+		//Generating X1_1
+	      Random rd = new Random();
+	      float[] X1_1 = new float[500];
+	      for (int i = 0; i < X1_1.length; i++) {
+	    	  X1_1[i] = (rd.nextFloat())+0;
+	      }
+	      
+	    //Generating X1_2
+	      Random rd2 = new Random();
+	      float[] X1_2 = new float[500];
+	      for (int i = 0; i < X1_2.length; i++) {
+	    	  X1_2[i] = (rd2.nextFloat())-2;
+	      }
+	      
+	      
+	   //Generating X2_1
+	      Random rd3 = new Random();
+	      float[] X1_3 = new float[500];
+	      for (int i = 0; i < X1_3.length; i++) {
+	    	  X1_3[i] = (rd3.nextFloat())+2;
+	      }
+	      
+	    //Generating X2_2
+	      Random rd4 = new Random();
+	      float[] X1_4 = new float[500];
+	      for (int i = 0; i < X1_4.length; i++) {
+	    	  X1_4[i] = (rd4.nextFloat())+2;
+	      }
+	    
+	      
+	     //Generating X3_1
+	      Random rd5 = new Random();
+	      float[] X1_5 = new float[500];
+	      for (int i = 0; i < X1_5.length; i++) {
+	    	  X1_5[i] = (rd5.nextFloat())-2;
+	      }
+	      
+	      
+	    //Generating X3_2
+	      Random rd6 = new Random();
+	      float[] X1_6 = new float[500];
+	      for (int i = 0; i < X1_6.length; i++) {
+	    	  X1_6[i] = (rd6.nextFloat())+2;
+	      }
+	      
+	      
+	 //Merging them into 3  2 d arrays	      
+	      float [][]x1=convertTo2D(X1_1,X1_2);
+	      float [][]x2=convertTo2D(X1_3,X1_4);
+	      float [][]x3=convertTo2D(X1_5,X1_6);
+	      
+	/**
+	 * Concatinating the 2d arrays to one 2d array of size 500( into one big matrix)
+	 */	      
+	    float [][] X = merge2dArrays(x1,x2,x3);    
+	    
 	
 		System.out.println("Processing the deeplearnign with no framework ");
 	}
