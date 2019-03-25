@@ -284,9 +284,24 @@ public class DeepLearningNoFramework {
 		int hidden_nodes = 5;
 		int classes = 3;
 	    
-/**
- * Randomly initializing the weights
- */
+	/**
+	 * Randomly initializing the weights
+	 */
+		float[][]W1 = new float[features][hidden_nodes];
+		for(int i=0; i<W1.length;i++) {
+			
+		}
+		
+		
+		
+		
+		
+		float[] b1 = new float[hidden_nodes];
+		float[][]W2 = new float[hidden_nodes][classes];
+		float[]b2 = new float[classes];
+		
+	
+			
 
 	    
 		System.out.println("Processing the deeplearnign with no framework ");
