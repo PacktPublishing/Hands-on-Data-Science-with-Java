@@ -33,6 +33,7 @@ public class DeepLearningNoFramework {
 	
 	    return ret;
 	}
+	
 	/**
 	 * Getting the summation of array contents
 	 * @param myArray
@@ -264,6 +265,32 @@ public class DeepLearningNoFramework {
 	                c[i][j] = a[i][j] - b[i][j];
 	        return c;			
 		}
+		/**
+		 * Implementing Delta 1
+		 * //follows delta1 =(delta2).dot(W2.T) * A * (1 - A)
+		 * @param delta2
+		 * @param W2
+		 * @param A
+		 * @return
+		 */
+		public static double[][] delta1(double[][]delta2, double[][]W2,double[][]A){
+			//Getting the transpose  of W
+			double [][] w2Transpose = transpose(W2);
+			
+			//implementing 1-A
+			double [][] subtractedA = new double[A.length][A[0].length];
+			for(int i =0; i<A.length;i++) {
+				for(int j=0; j<A[i].length;j++) {
+					subtractedA[i][j]=1-(A[i][j]);					
+				}
+			}
+			
+			 double[][] multipliedDW = matrixMultiplication(delta2,w2Transpose);//Multipliying delta2 with transposed W2
+			 double[][] multipliedDWA =matrixMultiplication(multipliedDW,A);//Multiply result above with A
+			 double[][] multipliedDWAsubA =matrixMultiplication(multipliedDWA,subtractedA); //multiply result above with subtracted A			 
+			return multipliedDWAsubA;
+		}
+		
 		
 		
 		
@@ -403,8 +430,9 @@ public class DeepLearningNoFramework {
 		
 		//backward pass
 	    double [][] delta2 =matrixSubtraction(Y,labelHotEncodings());
-	    	//Calculating delta1
-	    double [][] delta1 =
+	    double [][] delta1 = delta1(delta2,W2,A);
+	    
+	   // double [][] delta1 =
 	    //delta1 = (delta2).dot(W2.T) * A * (1 - A)
 		
 		
