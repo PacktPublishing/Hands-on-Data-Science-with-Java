@@ -249,7 +249,21 @@ public class DeepLearningNoFramework {
 			return broadcastedMatrix;
 			
 		}
-		
+		/**
+		 * Subtracting the matrixex
+		 * @param a
+		 * @param b
+		 * @return
+		 */
+		public static double[][] matrixSubtraction(double [][]a , double[][]b){
+			int m = a.length;
+	        int n = a[0].length;
+	        double[][] c = new double[m][n];
+	        for (int i = 0; i < m; i++)
+	            for (int j = 0; j < n; j++)
+	                c[i][j] = a[i][j] - b[i][j];
+	        return c;			
+		}
 		
 		
 		
@@ -388,8 +402,9 @@ public class DeepLearningNoFramework {
 		double [][]Y = theSoftmax(matrixVectorAddition((matrixMultiplication(A,W2)),b2)); // Y = softmax(Z2)
 		
 		//backward pass
-		double [][] T = labelHotEncodings();
-	    double [][] delta2 = Y - T;
+	    double [][] delta2 =matrixSubtraction(Y,labelHotEncodings());
+	    	//Calculating delta1
+	    double [][] delta1 =
 	    //delta1 = (delta2).dot(W2.T) * A * (1 - A)
 		
 		
