@@ -68,34 +68,44 @@ public class DeepLearningNoFramework {
 	 * Defining the Softmax Function
 	 * @param A
 	 */	
-	public static double[] theSoftmax (double [] x){
-		double exponents [] = new double [x.length];
+
+	public static double[][] theSoftmax (double [][] x){
 		
-		for(int i= 0; i<x.length; i++) {
-				double expVal= Math.exp((x[i]));
-				
-				//double sigmoidVal = 1/(1+val);
-				exponents[i]=expVal;
+		//Getting the exponents
+		double [][] theExponents = new double [x.length][x[0].length];
+		for(int i =0; i<x.length;i++) {
+			for(int j=0; j<x[i].length;j++) {
+				theExponents[i][j]=Math.exp(x[i][j]);
+			}
 		}
 		
-		//Calculating the exponential divide by the sum
-		double softmaxExponents [] = new double [exponents.length];
-		for(int j =0; j<exponents.length; j++) {
-			
-			double myVal = exponents[j]/getArraySummation(exponents);
-			softmaxExponents[j]=myVal;
-			
+		//Summing the  expnonets to one array
+		double [] sumArray = new double [theExponents.length];
+		for(int i =0; i<theExponents.length;i++) {
+			double sum =0;
+			for(int j=0; j<theExponents[i].length;j++) {
+				sum = sum +theExponents[i][j];
+			}
+			sumArray[i]=sum;
 		}
 		
-		return softmaxExponents;
+		//division of the :theExponents by summation of exponents:sumArray
+		double [][] Y =  new double[theExponents.length][theExponents[0].length];
+		for (int i=0; i<theExponents.length;i++) {
+			for(int j=0;j<theExponents[i].length;j++) {
+				Y[i][j]= theExponents[i][j]/sumArray[i];
+			}
+		}
+		return Y;
+		
 	}
 	
 	/**
 	 * Convert two arrays to a two dimensional array
 	 * @param 2 arrays of type float
 	 */	
-	public static float[][] convertTo2D(float [] x1, float[]x2){
-		float[][] newArray = new float[500][2];
+	public static double[][] convertTo2D(double [] x1, double[]x2){
+		double[][] newArray = new double[500][2];
 		for (int i=0;i<x1.length;i++){
 			newArray[i][0]=x1[i];
         }
@@ -110,8 +120,8 @@ public class DeepLearningNoFramework {
 	 * Merging 3 2d Arrays into One 2d array
 	 * @param args
 	 */
-	public static float[][] merge2dArrays (float[][]x1,float[][]x2,float[][]x3){
-		float[][] merge2dArrays	= new float[1500][2];
+	public static double[][] merge2dArrays (double[][]x1,double[][]x2,double[][]x3){
+		double [][] merge2dArrays	= new double[1500][2];
 		
 		for(int i = 0; i < x1.length;i++) {
 			for (int j = 0; j<x1[j].length; j++) {
@@ -153,8 +163,8 @@ public class DeepLearningNoFramework {
 	   * A matrix to generate the hot encodings for the labels in the previous function
 	   * @return
 	   */
-	  public static int[][] labelHotEncodings(){		  
-		  int[][] hotEncodingsArray = new int[1500][3];
+	  public static double[][] labelHotEncodings(){		  
+		  double[][] hotEncodingsArray = new double[1500][3];
 		  for(int i = 0; i<500; i++) {
 			  for(int j =0;j<3; j++) {
 				  if(j==0) {
@@ -192,13 +202,62 @@ public class DeepLearningNoFramework {
 	 * @param j
 	 * @return
 	 */
-	public static float[] extractArray(float [][]X,int j) {
-		float[] myNewArray = new float[X.length];
+	public static double[] extractArray(double [][]X,int j) {
+		double[] myNewArray = new double[X.length];
 		for(int i =0; i<X.length;i++) {
 			myNewArray[i]=X[i][j];	
 		}
 		return myNewArray;		
 	}
+	
+	
+	/**
+	 * dotProdut ( multiplying two arrays)
+	 *Adopted from Matrix .Java
+	 * @param args
+	 */
+		public static double[][] matrixMultiplication(double[][] a, double[][] b) {
+		        int m1 = a.length;
+		        int n1 = a[0].length;
+		        int m2 = b.length;
+		        int n2 = b[0].length;
+		        if (n1 != m2) throw new RuntimeException("Illegal matrix dimensions.");
+		        double[][] c = new double[m1][n2];
+		        for (int i = 0; i < m1; i++)
+		            for (int j = 0; j < n2; j++)
+		                for (int k = 0; k < n1; k++)
+		                    c[i][j] += a[i][k] * b[k][j];
+		        return c;
+		    }
+		/**
+		 * Matrix vector addition
+		 * @param a
+		 * @param b
+		 * @return
+		 */
+		
+		public static double[][] matrixVectorAddition (double[][]a , double []b ){
+			
+			double [][] broadcastedMatrix = new double [a.length][b.length];
+			
+			for(int i=0; i<a.length;i++) {
+				for (int j=0; j<a[i].length;j++) {
+					broadcastedMatrix[i][j]=a[i][j]+b[j];
+				}
+				
+			}
+			return broadcastedMatrix;
+			
+		}
+		
+		
+		
+		
+	/**
+	 * Adding two dimenstional array  to a one dimensional array
+	 * @param args
+	 */
+	
 	
 	public static void main(String[] args) {
 /**
@@ -206,59 +265,59 @@ public class DeepLearningNoFramework {
  */
 		//Generating X1_1
 	      Random rd = new Random();
-	      float[] X1_1 = new float[500];
+	      double[] X1_1 = new double[500];
 	      for (int i = 0; i < X1_1.length; i++) {
-	    	  X1_1[i] = (rd.nextFloat())+0;
+	    	  X1_1[i] = (rd.nextGaussian())+0;
 	      }
 	      
 	    //Generating X1_2
 	      Random rd2 = new Random();
-	      float[] X1_2 = new float[500];
+	      double[] X1_2 = new double[500];
 	      for (int i = 0; i < X1_2.length; i++) {
-	    	  X1_2[i] = (rd2.nextFloat())-2;
+	    	  X1_2[i] = (rd2.nextGaussian())-2;
 	      }
 	      
 	      
 	   //Generating X2_1
 	      Random rd3 = new Random();
-	      float[] X1_3 = new float[500];
+	      double[] X1_3 = new double[500];
 	      for (int i = 0; i < X1_3.length; i++) {
-	    	  X1_3[i] = (rd3.nextFloat())+2;
+	    	  X1_3[i] = (rd3.nextGaussian())+2;
 	      }
 	      
 	    //Generating X2_2
 	      Random rd4 = new Random();
-	      float[] X1_4 = new float[500];
+	      double[] X1_4 = new double[500];
 	      for (int i = 0; i < X1_4.length; i++) {
-	    	  X1_4[i] = (rd4.nextFloat())+2;
+	    	  X1_4[i] = (rd4.nextGaussian())+2;
 	      }
 	    
 	      
 	     //Generating X3_1
 	      Random rd5 = new Random();
-	      float[] X1_5 = new float[500];
+	      double[] X1_5 = new double[500];
 	      for (int i = 0; i < X1_5.length; i++) {
-	    	  X1_5[i] = (rd5.nextFloat())-2;
+	    	  X1_5[i] = (rd5.nextGaussian())-2;
 	      }
 	      
 	      
 	    //Generating X3_2
 	      Random rd6 = new Random();
-	      float[] X1_6 = new float[500];
+	      double[] X1_6 = new double[500];
 	      for (int i = 0; i < X1_6.length; i++) {
-	    	  X1_6[i] = (rd6.nextFloat())+2;
+	    	  X1_6[i] = (rd6.nextGaussian())+2;
 	      }
 	      
 	      
 	 //Merging them into 3  2 d arrays	      
-	      float [][]x1=convertTo2D(X1_1,X1_2);
-	      float [][]x2=convertTo2D(X1_3,X1_4);
-	      float [][]x3=convertTo2D(X1_5,X1_6);
+	      double [][]x1=convertTo2D(X1_1,X1_2);
+	      double [][]x2=convertTo2D(X1_3,X1_4);
+	      double [][]x3=convertTo2D(X1_5,X1_6);
 	      
 	/**
 	 * Concatinating the 2d arrays to one 2d array of size 500( into one big matrix)
 	 */	      
-	    float [][] X = merge2dArrays(x1,x2,x3);    
+	    double [][] X =merge2dArrays(x1,x2,x3);    
 	
 	/**
 	 * Hot encodings
@@ -268,8 +327,8 @@ public class DeepLearningNoFramework {
     /**
      * Visualizing the data, we will be using Tablesaw
      */ 
-	    float [] myX =extractArray(X,0);
-	    float [] myY = extractArray(X,1);
+	    double [] myX =extractArray(X,0);
+	    double [] myY = extractArray(X,1);
 	    
 	    //convert to Column
 	    DoubleColumn theX = DoubleColumn.create("X", myX);
@@ -287,20 +346,55 @@ public class DeepLearningNoFramework {
 	/**
 	 * Randomly initializing the weights
 	 */
-		float[][]W1 = new float[features][hidden_nodes];
+		//W1
+		double [][]W1 = new double[features][hidden_nodes];
+		Random newRand = new Random();
 		for(int i=0; i<W1.length;i++) {
-			
+			for(int j = 0; j<W1[i].length; j++) {
+				W1[i][j]=newRand.nextGaussian();
+			}
+		}
+		//b1
+		double [] b1 = new double[hidden_nodes];
+		Random myRand = new Random();
+		for(int i = 0;i<b1.length;i++) {
+			b1[i]=myRand.nextGaussian();
 		}
 		
+		//W2
+		double[][]W2 = new double[hidden_nodes][classes];
+		Random randW2 = new Random();
+		for(int i=0; i<W2.length;i++) {
+			for(int j = 0; j<W2[i].length; j++) {
+				W2[i][j]=randW2.nextGaussian();
+			}
+		}
+		//b2		
+		double[]b2 = new double[classes];
+		Random randb2 = new Random();
+		for(int j= 0;j<b2.length;j++) {
+			b2[j]=randb2.nextGaussian();
+		}
+		
+		//Defining  Alpha and the cost array
+		double alpha = 10e-6;
+		double []costs;
 		
 		
+	for (int i =0; i<10000;i++) {
+		
+		 //Forward Pass		 
+		double [][]A = theSigmoid(matrixVectorAddition((matrixMultiplication(X,W1)),b1)); // A = sigma(Z);
+		double [][]Y = theSoftmax(matrixVectorAddition((matrixMultiplication(A,W2)),b2)); // Y = softmax(Z2)
+		
+		//backward pass
+		double [][] T = labelHotEncodings();
+	    double [][] delta2 = Y - T;
+	    //delta1 = (delta2).dot(W2.T) * A * (1 - A)
 		
 		
-		float[] b1 = new float[hidden_nodes];
-		float[][]W2 = new float[hidden_nodes][classes];
-		float[]b2 = new float[classes];
-		
-	
+				
+	}
 			
 
 	    
