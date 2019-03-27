@@ -91,7 +91,7 @@ public class DeepLearningTest {
         int outputNum = 3;
         long seed = 6;
         
-        System.out.println("Building the model,");
+        System.out.println("Building the  deeplearning Model");
         MultiLayerConfiguration layerConfiguration = new NeuralNetConfiguration.Builder()
             .seed(seed)
             .activation(Activation.TANH)
@@ -109,22 +109,22 @@ public class DeepLearningTest {
             .backprop(true).pretrain(false)
             .build();
         
-        //run the model
-        MultiLayerNetwork model = new MultiLayerNetwork(layerConfiguration);
-        model.init();
-        model.setListeners(new ScoreIterationListener(100));
+        System.out.print("Running the model"); 
+        MultiLayerNetwork theModel = new MultiLayerNetwork(layerConfiguration);
+        theModel.init();
+        theModel.setListeners(new ScoreIterationListener(100));
 
         for(int i=0; i<1000; i++ ) {
-            model.fit(irisTrainingData);
+        	theModel.fit(irisTrainingData);
         }
         
-        
-        
-      //evaluate the model on the test set
-        Evaluation eval = new Evaluation(3);
-        INDArray output = model.output(irisTestData.getFeatures());
-        eval.eval(irisTestData.getLabels(), output);
-        System.out.println(eval.stats());
+      /**
+       * Looking at the performance  and the evaluation of the model
+       */
+        Evaluation modelEvaluation = new Evaluation(3);
+        INDArray output = theModel.output(irisTestData.getFeatures());
+        modelEvaluation.eval(irisTestData.getLabels(), output);
+        System.out.println(modelEvaluation.stats());
         
         
         

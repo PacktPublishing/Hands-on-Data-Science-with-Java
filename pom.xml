@@ -144,6 +144,9 @@
       <artifactId>arbiter-deeplearning4j</artifactId>
       <version>1.0.0-beta2</version>
   </dependency>
+  
+
+  
 </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
