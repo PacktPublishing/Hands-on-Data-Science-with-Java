@@ -356,6 +356,42 @@ public class DeepLearningNoFramework {
 			}		
 			return updatedBias;
 		}
+		
+		/**
+		 * Implementing the Loss Function at each 100th Iteration
+		 * follows: loss = np.sum(-T * np.log(Y))
+		 * @param T
+		 * @param Y
+		 * @return theLoss which is a double
+		 */
+		public static double calculateLoss(double[][] T, double [][]Y) {
+			double loss = 0;
+			//Negatting the T
+			double [][] negateT = new double [T.length][T[0].length];
+			for(int i=0; i<T.length; i++) {
+				for(int j=0; j<T[0].length; j++) {
+					negateT[i][j]=(T[i][j]*-1);
+				}
+			}
+			//Get the Log of Y
+			double [][] logY = new double[Y.length][Y[0].length];
+			for(int i=0; i<Y.length; i++) {
+				for(int j=0; j<Y[0].length; j++) {
+					logY[i][j]=Math.log(Y[i][j]);
+				}
+			}
+			
+			//Multiply the Negative of T and Log Y results above
+			double [][] MultpyNegTLogY = matrixMultiplication(negateT,logY);
+			
+			//Sum the Content of the multidimensional array above to a one digit to get the loss
+			for(int i=0; i<MultpyNegTLogY.length;i++) {
+				for(int j=0; j<MultpyNegTLogY[0].length; j++) {
+					loss = loss+MultpyNegTLogY[i][j];
+				}
+			}
+			return loss;
+		}
 	
 		
 		
@@ -485,7 +521,8 @@ public class DeepLearningNoFramework {
 		
 		//Defining  Alpha and the cost array
 		double alpha = 10e-6;
-		double []costs;
+		double []costs = new double[100];
+		int lossIterator =0;
 		
 		
 	for (int i =0; i<10000;i++) {
@@ -504,20 +541,18 @@ public class DeepLearningNoFramework {
 	    double [][] new_W1 =updatingWeights(W1,alpha,X,delta1);
 	    double [] new_b1 =updatingBias(b1,alpha,delta1);
 	    
-	   //save loss function values across training iterations
-	    
-	    
-	    
-	    
-	    
-//	    if epoch % 100 == 0:
-//	        loss = np.sum(-T * np.log(Y))
-//	        print('Loss function value: ', loss)
-//	        costs.append(loss)
-
+	   //save loss function values across training iterations at each an every 100th iteration
+	    if((i % 100)==0) {
+	    	double loss =calculateLoss(labelHotEncodings(),Y);	    	
+	    	//Appending the loss to the costs array
+	    	costs[lossIterator]=loss;	    	
+	    }			
+	}
+	
+	
+	for(int i =0; i<costs.length;i++) {
+		System.out.println(costs[i]);
 		
-		
-				
 	}
 			
 
