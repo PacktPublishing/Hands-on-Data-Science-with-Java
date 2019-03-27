@@ -7,6 +7,7 @@ import tech.tablesaw.api.NumberColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.plotly.Plot;
 import tech.tablesaw.plotly.api.ScatterPlot;
+import tech.tablesaw.plotly.api.TimeSeriesPlot;
 import tech.tablesaw.plotly.components.Figure;
 
 public class DeepLearningNoFramework {
@@ -215,9 +216,10 @@ public class DeepLearningNoFramework {
 	 * @param a
 	 * @param b
 	 * @return dot matrix
+	 * matrixMultiplication
 	 */
 	
-	public static double[][] dotFunction (double[][] a, double[][] b){
+	public static double[][] matrixMultiplication (double[][] a, double[][] b){
 		double [][] theDotResult = new double [a.length][a[0].length];
 		if(a.length!=b.length) {
 			System.out.println("Illegal Matrix dimensions");
@@ -237,7 +239,7 @@ public class DeepLearningNoFramework {
 	 *Adopted from Matrix .Java
 	 * @param args
 	 */
-		public static double[][] matrixMultiplication(double[][] a, double[][] b) {
+		public static double[][] dotFunction(double[][] a, double[][] b) {
 		        int m1 = a.length;
 		        int n1 = a[0].length;
 		        int m2 = b.length;
@@ -297,8 +299,6 @@ public class DeepLearningNoFramework {
 			//Getting the transpose  of W
 			double [][] w2Transpose = transpose(W2);
 			//implementing 1-A
-			System.out.println(A.length);
-			System.out.println(A[0].length);
 			double [][] subtractedA = new double[A.length][A[0].length];
 			for(int i =0; i<A.length;i++) {
 				for(int j=0; j<A[i].length;j++) {
@@ -306,11 +306,7 @@ public class DeepLearningNoFramework {
 				}
 			}
 			
-			 double[][] multipliedDW = matrixMultiplication(delta2,w2Transpose);//Multipliying delta2 with transposed W2
-			 System.out.println(w2Transpose.length);
-			 System.out.println(w2Transpose[0].length);
-//			 System.out.println(A.length);
-//			 System.out.println(A[0].length);
+			 double[][] multipliedDW = dotFunction(delta2,w2Transpose);//Multipliying delta2 with transposed W2
 			 double[][] multipliedDWA =matrixMultiplication(multipliedDW,A);//Multiply result above with A
 			 double[][] multipliedDWAsubA =matrixMultiplication(multipliedDWA,subtractedA); //multiply result above with subtracted A			 
 			return multipliedDWAsubA;
@@ -330,7 +326,7 @@ public class DeepLearningNoFramework {
 			//Getting transpose of A
 			double [][] AXTranspose =  transpose(AX);
 			//Multiply transpose with Delta
-			 double [][] AXTransposeD =matrixMultiplication(AXTranspose,delta);
+			 double [][] AXTransposeD =dotFunction(AXTranspose,delta);
 			 
 			 //Multiply result above with Alpha
 			 double [][] AXTransposeDA = new double[AXTransposeD.length][AXTransposeD[0].length];
@@ -344,7 +340,7 @@ public class DeepLearningNoFramework {
 			return updatedWeight;
 		}
 		/**
-		 * Updating the Weights
+		 * Updating the bias
 		 * follows b2 -= alpha * (delta2).sum(axis=0)
 		 * @param bias
 		 * @param alpha
@@ -357,6 +353,10 @@ public class DeepLearningNoFramework {
 			double col1=0;
 			double col2=0;
 			double col3=0;
+			double col4=0;
+			double col5=0;
+			
+			
 			for(int i=0; i<delta.length; i++) {
 				for(int j =0; j<delta[0].length;j++) {
 					if(j==0) {
@@ -365,17 +365,38 @@ public class DeepLearningNoFramework {
 					else if(j==1){
 						col2=col2+delta[i][j];
 					}
-					else {
+					else if(j==2) {
 						col3=col3+delta[i][j];
+					}
+					else if(j==3) {
+						col4=col4+delta[i][j];
+					}
+					else if(j==4) {
+						col5=col5+delta[i][j];
 					}
 				}
 			}
-			double [] summedDelta = {col1,col2,col3};
 			
-			//Multiply Alpha with Summed Delta
-			double [] summedDeltaAlpha = {col1*alpha,col2*alpha,col3*alpha};
+			double [] summedDelta = new double[delta.length];
+			double [] summedDeltaAlpha = new double[summedDelta.length];
 			
-			//Subtract result above from original bias
+			if(col4==0) {
+				//Multiply Alpha with Summed Delta
+				summedDeltaAlpha[0]=col1*alpha;
+				summedDeltaAlpha[1]=col2*alpha;
+				summedDeltaAlpha[2]=col3*alpha;		
+			}
+			else {
+				summedDeltaAlpha[0]=col1*alpha;
+				summedDeltaAlpha[1]=col2*alpha;
+				summedDeltaAlpha[2]=col3*alpha;
+				summedDeltaAlpha[3]=col4*alpha;
+				summedDeltaAlpha[4]=col5*alpha;
+			}
+			//Subtract result above from original biast
+//			System.out.println("Original Bias"+bias.length);
+//			System.out.println("subtracting"+summedDeltaAlpha.length);
+			
 			for(int i=0; i<bias.length;i++) {
 				updatedBias[i]=bias[i]-summedDeltaAlpha[i];
 			}		
@@ -553,34 +574,48 @@ public class DeepLearningNoFramework {
 	for (int i =0; i<10000;i++) {
 		
 		 //Forward Pass		 
-		double [][]A = theSigmoid(matrixVectorAddition((matrixMultiplication(X,W1)),b1)); // A = sigma(Z);
-		double [][]Y = theSoftmax(matrixVectorAddition((matrixMultiplication(A,W2)),b2)); // Y = softmax(Z2)
+		double [][]A = theSigmoid(matrixVectorAddition((dotFunction(X,W1)),b1)); // A = sigma(Z);
+		double [][]Y = theSoftmax(matrixVectorAddition((dotFunction(A,W2)),b2)); // Y = softmax(Z2)
 		
 		//backward pass
 	    double [][] delta2 =matrixSubtraction(Y,labelHotEncodings());
 	    double [][] delta1 = delta1(delta2,W2,A);
 	    
 	    //Updating weights and Bias
-	    double [][] new_W2= updatingWeights(W2,alpha,A,delta2);
-	    double [] new_b2 =updatingBias(b2,alpha,delta2);
-	    double [][] new_W1 =updatingWeights(W1,alpha,X,delta1);
-	    double [] new_b1 =updatingBias(b1,alpha,delta1);
+	    W2= updatingWeights(W2,alpha,A,delta2);
+	    b2=updatingBias(b2,alpha,delta2);
+	    W1 =updatingWeights(W1,alpha,X,delta1);
+	    b1 =updatingBias(b1,alpha,delta1);
 	    
 	   //save loss function values across training iterations at each an every 100th iteration
 	    if((i % 100)==0) {
 	    	double loss =calculateLoss(labelHotEncodings(),Y);	    	
 	    	//Appending the loss to the costs array
-	    	costs[lossIterator]=loss;	    	
+	    	costs[lossIterator]=loss;	
+	    	System.out.println("Loss" +loss);
 	    }			
 	}
-	
-	
-	for(int i =0; i<costs.length;i++) {
-		System.out.println(costs[i]);
-		
-	}
-			
 
+/**
+ * Plotting the Loss function
+ */
+//Array 1: costs
+//Array 2: 1-100
+	
+	double [] xAxis = new double[100];//Creating and array of 1 to 100:
+	for(int i=0; i<xAxis.length;i++) {//filling array with 1 to 100
+		xAxis[i]=i+1;
+	}
+	
+	//Converting to columns and then to table
+	DoubleColumn myXline =DoubleColumn.create("Xline",xAxis);
+	DoubleColumn myYline =DoubleColumn.create("Yline",costs);
+	Table lossFun =Table.create("lossFun",myXline,myYline);
+//	Table diabetes = lossFun.structure();
+//	System.out.println(diabetes);
+	
+	//Line grapgh
+	Plot.show(TimeSeriesPlot.create("Loss Function", lossFun, "Xline", "Yline"));
 	    
 		System.out.println("Processing the deeplearnign with no framework ");
 	}
