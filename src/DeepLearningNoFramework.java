@@ -291,6 +291,72 @@ public class DeepLearningNoFramework {
 			return multipliedDWAsubA;
 		}
 		
+		/**
+		 * Updating the weights
+		 * follows W2 -= alpha * A.T.dot(delta2)
+		 * @param weight
+		 * @param alpha
+		 * @param A
+		 * @param delta
+		 * @return
+		 */
+		public static double [][] updatingWeights(double [][] weight , double alpha, double [][]AX, double[][] delta){
+			double [][] updatedWeight = new  double [weight.length][weight[0].length];
+			//Getting transpose of A
+			double [][] AXTranspose =  transpose(AX);
+			//Multiply transpose with Delta
+			 double [][] AXTransposeD =matrixMultiplication(AXTranspose,delta);
+			 
+			 //Multiply result above with Alpha
+			 double [][] AXTransposeDA = new double[AXTransposeD.length][AXTransposeD[0].length];
+			 for(int i=0; i<AXTransposeD.length; i++) {
+				 for(int j =0; j<AXTransposeD[0].length; j++) {
+					 AXTransposeDA[i][j]=AXTransposeD[i][j]*alpha;
+				 }
+			 }
+			  //Subtract result above from original weight 
+			 updatedWeight =matrixSubtraction(weight,AXTransposeDA);
+			return updatedWeight;
+		}
+		/**
+		 * Updating the Weights
+		 * follows b2 -= alpha * (delta2).sum(axis=0)
+		 * @param bias
+		 * @param alpha
+		 * @param delta
+		 * @return
+		 */
+		public static double[] updatingBias(double [] bias, double alpha, double[][] delta) {
+			double [] updatedBias = new double [bias.length];
+			// Summation of the delta column wise
+			double col1=0;
+			double col2=0;
+			double col3=0;
+			for(int i=0; i<delta.length; i++) {
+				for(int j =0; j<delta[0].length;j++) {
+					if(j==0) {
+						col1=col1+delta[i][j];
+					}
+					else if(j==1){
+						col2=col2+delta[i][j];
+					}
+					else {
+						col3=col3+delta[i][j];
+					}
+				}
+			}
+			double [] summedDelta = {col1,col2,col3};
+			
+			//Multiply Alpha with Summed Delta
+			double [] summedDeltaAlpha = {col1*alpha,col2*alpha,col3*alpha};
+			
+			//Subtract result above from original bias
+			for(int i=0; i<bias.length;i++) {
+				updatedBias[i]=bias[i]-summedDeltaAlpha[i];
+			}		
+			return updatedBias;
+		}
+	
 		
 		
 		
@@ -432,8 +498,23 @@ public class DeepLearningNoFramework {
 	    double [][] delta2 =matrixSubtraction(Y,labelHotEncodings());
 	    double [][] delta1 = delta1(delta2,W2,A);
 	    
-	   // double [][] delta1 =
-	    //delta1 = (delta2).dot(W2.T) * A * (1 - A)
+	    //Updating weights and Bias
+	    double [][] new_W2= updatingWeights(W2,alpha,A,delta2);
+	    double [] new_b2 =updatingBias(b2,alpha,delta2);
+	    double [][] new_W1 =updatingWeights(W1,alpha,X,delta1);
+	    double [] new_b1 =updatingBias(b1,alpha,delta1);
+	    
+	   //save loss function values across training iterations
+	    
+	    
+	    
+	    
+	    
+//	    if epoch % 100 == 0:
+//	        loss = np.sum(-T * np.log(Y))
+//	        print('Loss function value: ', loss)
+//	        costs.append(loss)
+
 		
 		
 				
