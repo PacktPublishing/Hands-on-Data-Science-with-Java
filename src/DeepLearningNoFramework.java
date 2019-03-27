@@ -210,7 +210,27 @@ public class DeepLearningNoFramework {
 		}
 		return myNewArray;		
 	}
+	/**
+	 * Implementation of dot matrix, cross multiplication
+	 * @param a
+	 * @param b
+	 * @return dot matrix
+	 */
 	
+	public static double[][] dotFunction (double[][] a, double[][] b){
+		double [][] theDotResult = new double [a.length][a[0].length];
+		if(a.length!=b.length) {
+			System.out.println("Illegal Matrix dimensions");
+		}
+		
+		for(int i=0; i<a.length;i++) {
+			for(int j =0;j<a[i].length;j++) {
+				theDotResult[i][j]=a[i][j]*b[i][j];
+			}
+		}
+		
+		return theDotResult;
+	}
 	
 	/**
 	 * dotProdut ( multiplying two arrays)
@@ -276,8 +296,9 @@ public class DeepLearningNoFramework {
 		public static double[][] delta1(double[][]delta2, double[][]W2,double[][]A){
 			//Getting the transpose  of W
 			double [][] w2Transpose = transpose(W2);
-			
 			//implementing 1-A
+			System.out.println(A.length);
+			System.out.println(A[0].length);
 			double [][] subtractedA = new double[A.length][A[0].length];
 			for(int i =0; i<A.length;i++) {
 				for(int j=0; j<A[i].length;j++) {
@@ -286,6 +307,10 @@ public class DeepLearningNoFramework {
 			}
 			
 			 double[][] multipliedDW = matrixMultiplication(delta2,w2Transpose);//Multipliying delta2 with transposed W2
+			 System.out.println(w2Transpose.length);
+			 System.out.println(w2Transpose[0].length);
+//			 System.out.println(A.length);
+//			 System.out.println(A[0].length);
 			 double[][] multipliedDWA =matrixMultiplication(multipliedDW,A);//Multiply result above with A
 			 double[][] multipliedDWAsubA =matrixMultiplication(multipliedDWA,subtractedA); //multiply result above with subtracted A			 
 			return multipliedDWAsubA;
