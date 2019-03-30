@@ -35,8 +35,8 @@ sudo mkdir /usr/lib/jvm/java-10-openjdk-amd64
 sudo mv jdk-10 /usr/lib/jvm/java-10-openjdk-amd64
 
 sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-10-openjdk-amd64/jdk-10/bin/java 1
-
 sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/java-10-openjdk-amd64/jdk-10/bin/javac 1
+sudo update-alternatives --install /usr/bin/jps jps /usr/lib/jvm/java-10-openjdk-amd64/jdk-10/bin/jps 1
 
 sudo update-alternatives --config java
 sudo update-alternatives --config javac
