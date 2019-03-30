@@ -133,7 +133,15 @@ start-yarn.sh
 jps
 
 
+#Possible trouble shooting Ideas:
+#idea1: If datanode does not start
+Stop dfs
+Open hdfs-site.xml
+Remove data.dir and name.dir properties from the hdfs-site.xml
+Format the namenode
+Start dfs again
 
+#Idea 2 : If Yarn does not start
 
 
 
