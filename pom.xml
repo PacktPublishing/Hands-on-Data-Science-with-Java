@@ -8,14 +8,143 @@
   	<dependency>
   		<groupId>tech.tablesaw</groupId>
 	    <artifactId>tablesaw-core</artifactId>
-	    <version>LATEST</version>
+	    <version>0.25.2</version>
   	</dependency>
+  	<dependency>
+	    <groupId>tech.tablesaw</groupId>
+	    <artifactId>tablesaw-jsplot</artifactId>
+	    <version>0.25.2</version>
+	</dependency>
+<!-- Adding Smile dependencies to help with Analytics, ML etc advanced -->
+	<dependency>
+      	<groupId>com.github.haifengl</groupId>
+      	<artifactId>smile-core</artifactId>
+      	<version>1.5.2</version>
+    </dependency>
+    <dependency>
+      	<groupId>com.github.haifengl</groupId>
+      	<artifactId>smile-netlib</artifactId>
+      	<version>1.5.2</version>
+    </dependency>
+    <dependency>
+      	<groupId>com.github.haifengl</groupId>
+      	<artifactId>smile-plot</artifactId>
+      	<version>1.5.2</version>
+    </dependency>
+    <!-- Adding MYSQL dependency for connection to MYSQL database -->
   	<dependency>
 	    <groupId>mysql</groupId>
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>5.1.39</version>
 	</dependency>
-  </dependencies>
+	<dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <version>1.7.5</version>
+   </dependency>
+   <dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-simple</artifactId>
+       <version>1.6.4</version>
+   </dependency>
+   
+   <!-- Connecting to quandl  dependencies using Table Saw(Quandl4j)-->
+   <dependency>
+	  <groupId>com.jimmoores</groupId>
+	  <artifactId>quandl-core</artifactId>
+	  <version>2.0.0</version>
+   </dependency>
+   
+   <dependency>
+	  <groupId>com.jimmoores</groupId>
+	  <artifactId>quandl-tablesaw</artifactId>
+	  <version>2.0.0</version>
+   </dependency>
+   
+   
+   <!-- Word Cloud dependency (KUMO)-->
+   <dependency>
+	    <groupId>com.kennycason</groupId>
+	    <artifactId>kumo-core</artifactId>
+	    <version>1.17</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.kennycason</groupId>
+	    <artifactId>kumo-tokenizers</artifactId>
+	    <version>1.17</version>
+	</dependency>
+	
+<!-- Adding a dependency for DeepLearning4J functionality -->
+	  <dependency>
+	      <groupId>org.deeplearning4j</groupId>
+	      <artifactId>deeplearning4j-core</artifactId>
+	      <version>1.0.0-beta2</version>
+	  </dependency>
+	  <dependency>
+	      <groupId>org.deeplearning4j</groupId>
+	      <artifactId>deeplearning4j-nlp</artifactId>
+	      <version>1.0.0-beta2</version>
+	  </dependency>
+	  <dependency>
+	      <groupId>org.deeplearning4j</groupId>
+	      <artifactId>deeplearning4j-zoo</artifactId>
+	      <version>1.0.0-beta2</version>
+	  </dependency> 
+	   <!-- ParallelWrapper & ParallelInference live here
+	 <dependency>
+	     <groupId>org.deeplearning4j</groupId>
+	     <artifactId>deeplearning4j-parallel-wrapper</artifactId>
+	     <version>1.0.0-beta3</version>
+	 </dependency> -->
+
+  
+  <!-- ND4J -->  
+  <dependency>
+      <groupId>org.nd4j</groupId>
+      <artifactId>nd4j-native-platform</artifactId>
+      <version>1.0.0-beta2</version>
+  </dependency>
+  <!--<dependency>
+    <groupId>org.nd4j</groupId>
+    <artifactId>nd4j-cuda-9.0-platform</artifactId>
+    <version>1.0.0-beta2</version>
+ </dependency>-->
+  
+  <!-- Next 2: used for MapFileConversion Example. Note you need *both* together 
+  Datavec Dependencies-->
+  <dependency>
+      <groupId>org.datavec</groupId>
+      <artifactId>datavec-hadoop</artifactId>
+      <version>1.0.0-beta2</version>
+  </dependency>
+  <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>3.1.1</version>
+      <exclusions>
+          <exclusion>
+              <groupId>jdk.tools</groupId>
+              <artifactId>jdk.tools</artifactId>
+          </exclusion>
+          <exclusion>
+              <groupId>log4j</groupId>
+              <artifactId>log4j</artifactId>
+          </exclusion>
+          <exclusion>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-log4j12</artifactId>
+          </exclusion>
+      </exclusions>
+  </dependency>
+  
+  
+    <!-- Arbiter - used for hyperparameter optimization (grid/random search) -->
+  <dependency>
+      <groupId>org.deeplearning4j</groupId>
+      <artifactId>arbiter-deeplearning4j</artifactId>
+      <version>1.0.0-beta2</version>
+  </dependency>
+</dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
